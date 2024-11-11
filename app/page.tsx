@@ -1,101 +1,139 @@
-import Image from "next/image";
+'use client'
+import React, { useEffect, useState } from 'react';
+import { NextPage } from 'next';
 
-export default function Home() {
+interface Slot {
+  start: number;
+  duration: number;
+  activity: string;
+}
+
+interface Room {
+  name: string;
+  slots: Slot[];
+}
+
+interface TimelineProps {
+  data: Room[];
+}
+
+const Timeline: React.FC<TimelineProps> = ({ data }) => {
+  const hours = Array.from({ length: 13 }, (_, i) => i); // [0, 1, ..., 12]
+  const [currentTimeLeft, setCurrentTimeLeft] = useState(0);
+
+  useEffect(() => {
+    const updateCurrentTimeLeft = () => {
+      const now = new Date();
+      const totalMinutes = (now.getHours() - 10) * 60 + now.getMinutes();
+      const percentageLeft = (totalMinutes / (12 * 60)) * 100;
+      setCurrentTimeLeft(percentageLeft);
+    };
+
+    updateCurrentTimeLeft();
+    const interval = setInterval(updateCurrentTimeLeft, 60000); // Update every minute
+    return () => clearInterval(interval);
+  }, []);
+
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="relative overflow-x-auto whitespace-nowrap mx-auto max-w-screen-lg">
+      <div className="flex p-2 bg-gray-200">
+        <div className="w-32"></div>
+        {hours.map(hour => (
+          <div key={hour} className="w-32 border-l-1 border-green-300">
+            {hour + 10}:00
+          </div>
+        ))}
+      </div>
+      {data.map((room, index) => (
+        <div key={index} className="flex items-center my-2">
+          <div className="w-24 font-bold bg-white">{room.name}</div>
+          <div className="relative flex-grow h-16 bg-gray-300 min-w-max">
+            {room.slots.map((slot, idx) => {
+              const slotStart = 10 + slot.start;
+              const slotEnd = slotStart + slot.duration;
+              const now = new Date();
+              const currentHour = now.getHours() + now.getMinutes() / 60;
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+              let bgColor = 'bg-blue-500'; // Default color for slot
+
+              if (currentHour > slotEnd) {
+                bgColor = 'bg-green-300'; // Past items
+              } else if (currentHour >= slotStart && currentHour <= slotEnd) {
+                bgColor = 'bg-violet-300'; // Current items
+              } else if (currentHour < slotStart) {
+                bgColor = 'bg-orange-300'; // Future items
+              }
+
+              return (
+                <div
+                  key={idx}
+                  className={`absolute top-0 bottom-0 ${bgColor} text-white text-center rounded-md p-1`}
+                  style={{ left: `${(slot.start * 100) / 13}%`, width: `${slot.duration * 100 / 13}%` }}
+                >
+                  {slot.activity}
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      ))}
+      <div
+        className="absolute top-0 bottom-0 bg-red-500 w-1"
+        style={{ left: `${currentTimeLeft}%` }}
+      ></div>
     </div>
   );
-}
+};
+
+const data: Room[] = [
+  {
+    name: 'BED 1',
+    slots: [
+      { start: 0, duration: 2, activity: '120min Therapy' }, // 10:00 to 12:00
+      { start: 5, duration: 1, activity: '60min Therapy' }   // 15:00 to 16:00
+    ]
+  },
+  {
+    name: 'BED 2',
+    slots: [
+      { start: 0, duration: 1.5, activity: '90min Massage' }, // 10:00 to 11:30
+      { start: 3, duration: 2, activity: '120min Session' }   // 13:00 to 15:00
+    ]
+  },
+  {
+    name: 'BED 3',
+    slots: [
+      { start: 2, duration: 1.5, activity: '90min Massage' }, // 12:00 to 13:30
+      { start: 4, duration: 5, activity: '120min Session' }   // 14:00 to 16:00
+    ]
+  },
+  {
+    name: 'BED 4',
+    slots: [
+      { start: 3, duration: 1.5, activity: '90min Massage' }, // 13:00 to 14:30
+      { start: 6, duration: 2, activity: '120min Session' }   // 17:00 to 19:00
+    ]
+  },
+  {
+    name: 'SEAT 1',
+    slots: []
+  },
+  {
+    name: 'SEAT 2',
+    slots: [
+      { start: 5, duration: 1.5, activity: '90min Massage' }, // 15:00 to 16:30
+      { start: 9, duration: 2, activity: '120min Session' }   // 19:00 to 21:00
+    ]
+  },
+  // Additional room data here
+];
+
+const Home: NextPage = () => (
+  <div>
+    <h1 className="text-xl font-bold mb-4">Room Management Timeline</h1>
+    <Timeline data={data} />
+  </div>
+);
+
+export default Home;
