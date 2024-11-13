@@ -1,6 +1,8 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
+import { START_HOUR, TOTAL_SLOTS } from '@/lib/constants';
+
 
 interface Slot {
   start: number;
@@ -18,37 +20,59 @@ interface TimelineProps {
 }
 
 const Timeline: React.FC<TimelineProps> = ({ data }) => {
-  const hours = Array.from({ length: 13 }, (_, i) => i); // [0, 1, ..., 12]
+  const hours = Array.from({ length: TOTAL_SLOTS + 1 }, (_, i) => i); // [0, 1, ..., 12]
   const [currentTimeLeft, setCurrentTimeLeft] = useState(0);
 
   useEffect(() => {
     const updateCurrentTimeLeft = () => {
       const now = new Date();
-      const totalMinutes = (now.getHours() - 10) * 60 + now.getMinutes();
-      const percentageLeft = (totalMinutes / (12 * 60)) * 100;
-      setCurrentTimeLeft(percentageLeft);
+      const hour = now.getHours();
+      const minute = now.getMinutes();
+
+      // Define the starting hour (10 AM) and the total slots (12 hours, from 10:00 to 22:00)
+      const startHour = START_HOUR;
+      const totalSlots = TOTAL_SLOTS + 1;
+      const slotWidth = 1 / totalSlots;
+
+      // Calculate the hour index relative to 10 AM
+      const hourIndex = hour - startHour;
+
+      // If the hour is within our tracked range, calculate the percentageLeft
+      if (hourIndex >= 0 && hourIndex < totalSlots) {
+        console.log(hourIndex * slotWidth)
+        const basePercentage = hourIndex * slotWidth; // Base percentage for the start of the hour slot
+        const minuteFraction = minute / 60; // Fractional percentage within the hour
+        const percentageLeft = basePercentage + minuteFraction * slotWidth;
+
+        setCurrentTimeLeft((percentageLeft * 100));
+      }
     };
 
     updateCurrentTimeLeft();
     const interval = setInterval(updateCurrentTimeLeft, 60000); // Update every minute
+
     return () => clearInterval(interval);
   }, []);
 
 
   return (
     <div className="relative overflow-x-auto whitespace-nowrap mx-auto max-w-screen-lg">
-      <div className="flex p-2 bg-gray-200">
-        <div className="w-32"></div>
+      <div className="flex relative ml-24 bg-gray-200 rounded-md overflow-hidden">
         {hours.map(hour => (
-          <div key={hour} className="w-32 border-l-1 border-green-300">
+          <div key={hour} className="w-1/12 py-1 text-center border-l border-l-lavender-info-500">
             {hour + 10}:00
           </div>
         ))}
+        <div
+          className="absolute top-0 bottom-0 bg-[#A265E9] w-1 z-10"
+          style={{ left: `${Math.min(currentTimeLeft, 99.9)}%` }} // Ensure it stays before 22:00
+        ></div>
+
       </div>
       {data.map((room, index) => (
         <div key={index} className="flex items-center my-2">
           <div className="w-24 font-bold bg-white">{room.name}</div>
-          <div className="relative flex-grow h-16 bg-gray-300 min-w-max">
+          <div className="relative flex-grow h-16   ">
             {room.slots.map((slot, idx) => {
               const slotStart = 10 + slot.start;
               const slotEnd = slotStart + slot.duration;
@@ -58,19 +82,20 @@ const Timeline: React.FC<TimelineProps> = ({ data }) => {
               let bgColor = 'bg-blue-500'; // Default color for slot
 
               if (currentHour > slotEnd) {
-                bgColor = 'bg-green-300'; // Past items
+                bgColor = 'bg-[#C7F29D] border-lavender-success-700 shadow-lavender-success-900 border-2'; // Past items
               } else if (currentHour >= slotStart && currentHour <= slotEnd) {
-                bgColor = 'bg-violet-300'; // Current items
+                bgColor = 'bg-[#BF93F3] border-lavender-primary-700 shadow-lavender-primary-900 border-2'; // Current items
               } else if (currentHour < slotStart) {
-                bgColor = 'bg-orange-300'; // Future items
+                bgColor = 'bg-[#F9986E] border-lavender-danger-700 shadow-lavender-danger-900 border-2'; // Future items
               }
 
               return (
                 <div
                   key={idx}
-                  className={`absolute top-0 bottom-0 ${bgColor} text-white text-center rounded-md p-1`}
+                  className={`absolute top-0 bottom-0 ${bgColor} text-center rounded-md p-1`}
                   style={{ left: `${(slot.start * 100) / 13}%`, width: `${slot.duration * 100 / 13}%` }}
                 >
+                  <div className="absolute -top-5 -right-5 px-1 rounded-sm font-semibold bg-white border border-lavender-primary-500 text-lavender-primary-500">{`${slot.duration * 60}m`}</div>
                   {slot.activity}
                 </div>
               );
@@ -78,10 +103,7 @@ const Timeline: React.FC<TimelineProps> = ({ data }) => {
           </div>
         </div>
       ))}
-      <div
-        className="absolute top-0 bottom-0 bg-red-500 w-1"
-        style={{ left: `${currentTimeLeft}%` }}
-      ></div>
+
     </div>
   );
 };
@@ -98,7 +120,8 @@ const data: Room[] = [
     name: 'BED 2',
     slots: [
       { start: 0, duration: 1.5, activity: '90min Massage' }, // 10:00 to 11:30
-      { start: 3, duration: 2, activity: '120min Session' }   // 13:00 to 15:00
+      { start: 3, duration: 2, activity: '120min Session' },   // 13:00 to 15:00
+      { start: 6, duration: 2, activity: '120min Session' }   // 13:00 to 15:00
     ]
   },
   {
@@ -123,7 +146,7 @@ const data: Room[] = [
     name: 'SEAT 2',
     slots: [
       { start: 5, duration: 1.5, activity: '90min Massage' }, // 15:00 to 16:30
-      { start: 9, duration: 2, activity: '120min Session' }   // 19:00 to 21:00
+      { start: 10, duration: 2.5, activity: '120min Session' }   // 19:00 to 21:00
     ]
   },
   // Additional room data here
