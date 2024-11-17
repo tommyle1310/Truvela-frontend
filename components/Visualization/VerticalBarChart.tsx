@@ -27,22 +27,22 @@ const chartData = [
 
 const chartConfig = {
     visitors: {
-        label: "Visitors",
+        label: "Healer",
     },
     chrome: {
-        label: "Chrome",
+        label: "Relax",
         color: "hsl(var(--chart-1))",
     },
     safari: {
-        label: "Safari",
+        label: "Bloom",
         color: "hsl(var(--chart-2))",
     },
     firefox: {
-        label: "Firefox",
+        label: "Leaf",
         color: "hsl(var(--chart-3))",
     },
     edge: {
-        label: "Edge",
+        label: "Purify Me",
         color: "hsl(var(--chart-4))",
     },
     other: {
@@ -51,11 +51,11 @@ const chartConfig = {
     },
 } satisfies ChartConfig
 
-export function ChartHorizontalBar() {
+export function ChartVerticalBar() {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Bar Chart - Mixed</CardTitle>
+                <CardTitle>Top Services</CardTitle>
                 <CardDescription>January - June 2024</CardDescription>
             </CardHeader>
             <CardContent>

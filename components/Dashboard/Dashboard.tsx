@@ -3,7 +3,7 @@ import React from 'react'
 import { DashboardCard } from './Card'
 import { dashboardCardItem } from '@/data/dashboard'
 import { ChartBar } from '../Visualization/BarChart'
-import { ChartHorizontalBar } from '../Visualization/HorizontalBarChart'
+import { ChartVerticalBar } from '../Visualization/VerticalBarChart'
 import { ChartPie } from '../Visualization/PieChart'
 
 const CURRENT_HOUR = new Date().getHours()
@@ -32,7 +32,7 @@ const Dashboard = () => {
             </div>
             <div className="grid grid-cols-2 gap-5">
                 <ChartBar />
-                <ChartHorizontalBar />
+                <ChartVerticalBar />
                 <ChartPie />
             </div>
         </div>

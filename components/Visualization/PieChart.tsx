@@ -30,7 +30,6 @@ const desktopData = [
     { month: "february", desktop: 305, fill: "var(--color-february)" },
     { month: "march", desktop: 237, fill: "var(--color-march)" },
     { month: "april", desktop: 173, fill: "var(--color-april)" },
-    { month: "may", desktop: 209, fill: "var(--color-may)" },
 ]
 
 const chartConfig = {
@@ -44,24 +43,20 @@ const chartConfig = {
         label: "Mobile",
     },
     january: {
-        label: "January",
+        label: "Cash (VND)",
         color: "hsl(var(--chart-1))",
     },
     february: {
-        label: "February",
+        label: "Cash ($)",
         color: "hsl(var(--chart-2))",
     },
     march: {
-        label: "March",
+        label: "Internet Banking",
         color: "hsl(var(--chart-3))",
     },
     april: {
-        label: "April",
+        label: "Credit Card",
         color: "hsl(var(--chart-4))",
-    },
-    may: {
-        label: "May",
-        color: "hsl(var(--chart-5))",
     },
 } satisfies ChartConfig
 
@@ -80,7 +75,7 @@ export function ChartPie() {
             <ChartStyle id={id} config={chartConfig} />
             <CardHeader className="flex-row items-start space-y-0 pb-0">
                 <div className="grid gap-1">
-                    <CardTitle>Pie Chart - Interactive</CardTitle>
+                    <CardTitle>Distribution of Payment Methods</CardTitle>
                     <CardDescription>January - June 2024</CardDescription>
                 </div>
                 <Select value={activeMonth} onValueChange={setActiveMonth}>
