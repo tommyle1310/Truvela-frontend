@@ -66,7 +66,15 @@ export const StaffModal: IStaffModalProps = {
                 img: { url: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/man-on-a-street.jpg", key: '21' }
             }],
             ageLimit: 18,
-            category: ["Massage Therapy"],
+            category: [{
+                id: 'category_1',
+                name: 'Massage Therapy',
+                description: 'Various types of massages focused on relaxation, pain relief, and overall well-being.',
+                avatar: {
+                    url: 'https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/massage.jpg',
+                    key: 'massage_therapy_avatar',
+                }
+            }],
         }
     ]
 }

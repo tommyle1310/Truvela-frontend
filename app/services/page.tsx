@@ -69,7 +69,7 @@ const columns: ColumnDef<Service>[] = [
     {
         accessorKey: "category",
         header: "Category",
-        cell: ({ row }) => <span>{row.original.category.join(", ")}</span>,
+        cell: ({ row }) => <span>{row.original.category && row.original.category[0].name && row.original.category[0].name}</span>,
     },
     {
         accessorKey: "duration",
@@ -90,7 +90,7 @@ const columns: ColumnDef<Service>[] = [
         header: "Add-ons",
         cell: ({ row }) => (
             <span>
-                {row.original.addOns.map((addOn) => addOn.name).join(", ")}
+                {row.original.addOns && row.original.addOns.map((addOn) => addOn.name).join(", ")}
             </span>
         ),
     },

@@ -118,7 +118,7 @@ const columns: ColumnDef<Staff>[] = [
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>View Profile</DropdownMenuItem>
-                        <DropdownMenuItem>Edit Details</DropdownMenuItem>
+                        <StaffForm />
                     </DropdownMenuContent>
                 </DropdownMenu>
             );

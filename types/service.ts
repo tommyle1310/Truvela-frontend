@@ -2,16 +2,12 @@ import { AddOns, TreatmentProduct } from "./stock";
 import { TherapistLevel } from "./therapist";
 
 export type ServiceCategory =
-    | 'Massage Therapy'
-    | 'Facial Treatments'
-    | 'Body Treatments'
-    | 'Hair Care'
-    | 'Nail Care'
-    | 'Aromatherapy'
-    | 'Hydrotherapy'
-    | 'Wellness & Fitness'
-    | 'Spa Packages'
-    | 'Specialty Services';
+    {
+        id: string,
+        name: string,
+        description: string,
+        avatar: { url: string, key: string }
+    }
 
 
 export type Service = {
@@ -26,7 +22,7 @@ export type Service = {
     minLevel?: TherapistLevel;
     treatmentProduct?: TreatmentProduct[];
     ageLimit?: number;
-    category?: ServiceCategory[];
+    category?: ServiceCategory[]
 };
 
 
