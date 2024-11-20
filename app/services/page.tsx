@@ -3,17 +3,24 @@
 import { SearchBar } from "@/components/SearchBar";
 import { GenericTable } from "@/components/Table/GenericTable";
 import { Badge } from "@/components/ui/badge";
-import { staffTable } from "@/data/table";
+import { serviceTable } from "@/data/table";
 import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { Staff } from "@/types/staff";
-import { StaffForm } from "@/components/Modal/StaffForm";
+import { Service } from "@/types/service";
 
-const columns: ColumnDef<Staff>[] = [
+// Define columns for the Service table
+const columns: ColumnDef<Service>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -50,56 +57,53 @@ const columns: ColumnDef<Staff>[] = [
                     <span className="font-bold text-lavender-primary-700">
                         {row.original.name}
                     </span>
-                    <span className="text-xs font-thin">{row.original.email}</span>
                 </div>
             </div>
         ),
     },
     {
-        accessorKey: "role",
-        header: "Role",
-        cell: ({ row }) => <span>{row.getValue("role")}</span>,
-    },
-    {
         accessorKey: "id",
-        header: "Staff ID",
+        header: "Service ID",
         cell: ({ row }) => <span>{row.getValue("id")}</span>,
     },
     {
-        accessorKey: "monthlyPoints",
-        header: "Monthly Points",
+        accessorKey: "category",
+        header: "Category",
+        cell: ({ row }) => <span>{row.original.category.join(", ")}</span>,
+    },
+    {
+        accessorKey: "duration",
+        header: "Duration",
         cell: ({ row }) => (
             <Badge
-                className={` ${(row.getValue("monthlyPoints") as number) >= 90
-                    ? "bg-lavender-success-300 text-lavender-success-800"
-                    : "bg-lavender-danger-300 text-lavender-danger-800"
+                className={` ${row.getValue("duration") as number >= 60
+                    ? "bg-lavender-warning-300 text-lavender-warning-800"
+                    : "bg-lavender-info-300 text-lavender-info-800"
                     }`}
             >
-                <span>{row.getValue("monthlyPoints")}</span>
+                {row.getValue("duration")}'
             </Badge>
         ),
     },
     {
-        accessorKey: "status",
-        header: "Status",
+        accessorKey: "addOns",
+        header: "Add-ons",
         cell: ({ row }) => (
-            <Badge
-                className={`${row.getValue("status") === "Active"
-                    ? "bg-lavender-success-300 text-lavender-success-800"
-                    : "bg-lavender-danger-300 text-lavender-danger-800"
-                    }`}
-            >
-                <span className={`capitalize text-${row.getValue("status")}`}>
-                    {row.getValue("status")}
-                </span>
-            </Badge>
+            <span>
+                {row.original.addOns.map((addOn) => addOn.name).join(", ")}
+            </span>
         ),
+    },
+    {
+        accessorKey: "restrictions",
+        header: "Restrictions",
+        cell: ({ row }) => <span>{row.getValue("restrictions")}</span>,
     },
     {
         id: "actions",
         enableHiding: false,
         cell: ({ row }) => {
-            const staff = row.original;
+            const service = row.original;
 
             return (
                 <DropdownMenu>
@@ -112,12 +116,11 @@ const columns: ColumnDef<Staff>[] = [
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(staff.id)}
+                            onClick={() => navigator.clipboard.writeText(service.id)}
                         >
-                            Copy Staff ID
+                            Copy Service ID
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>View Profile</DropdownMenuItem>
                         <DropdownMenuItem>Edit Details</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
@@ -131,18 +134,12 @@ const Page = () => {
         <div className="p-4 flex flex-col gap-4">
             <SearchBar />
             <div className="flex items-center gap-2">
-                <div className="flex items-center justify-between w-full">
-                    <div className="items-center flex gap-2">
-
-                        <div className="text-lg font-bold">Staffs</div>
-                        <Badge className="bg-lavender-success-300 text-lavender-success-800">
-                            {staffTable.length}
-                        </Badge>
-                    </div>
-                    <StaffForm />
-                </div>
+                <div className="text-lg font-bold">Services</div>
+                <Badge className="bg-lavender-success-300 text-lavender-success-800">
+                    {serviceTable.length}
+                </Badge>
             </div>
-            <GenericTable<Staff> data={staffTable} columns={columns} />
+            <GenericTable<Service> data={serviceTable} columns={columns} />
         </div>
     );
 };
