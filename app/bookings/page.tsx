@@ -2,23 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { START_HOUR, TOTAL_SLOTS } from '@/lib/constants';
+import { dataBookings, TimelineProps } from '@/data/bookings';
+import { StaffForm } from '@/components/Modal/StaffForm';
 
 
-interface Slot {
-    start: number;
-    duration: number;
-    therapy: string;
-    therapist: string
-}
 
-interface Room {
-    name: string;
-    slots: Slot[];
-}
-
-interface TimelineProps {
-    data: Room[];
-}
 
 const Timeline: React.FC<TimelineProps> = ({ data }) => {
     const hours = Array.from({ length: TOTAL_SLOTS + 1 }, (_, i) => i); // [0, 1, ..., 12]
@@ -110,55 +98,16 @@ const Timeline: React.FC<TimelineProps> = ({ data }) => {
     );
 };
 
-const data: Room[] = [
-    {
-        name: 'BED 1',
-        slots: [
-            { start: 0, duration: 2, therapist: 'Tommy Teo ', therapy: 'Healer' }, // 10:00 to 12:00
-            { start: 5, duration: 1, therapist: 'Tommy Teo ', therapy: 'Relax' }   // 15:00 to 16:00
-        ]
-    },
-    {
-        name: 'BED 2',
-        slots: [
-            { start: 0, duration: 2.5, therapist: 'Tommy Teo ', therapy: 'Crystal Healing' }, // 10:00 to 11:30
-            { start: 3, duration: 2, therapist: 'Tommy Teo ', therapy: 'Stretch' },   // 13:00 to 15:00
-            { start: 6, duration: 2, therapist: 'Tommy Teo ', therapy: 'Relax' }   // 13:00 to 15:00
-        ]
-    },
-    {
-        name: 'BED 3',
-        slots: [
-            { start: 2, duration: 1.5, therapist: 'Tommy Teo ', therapy: 'Bloom' }, // 12:00 to 13:30
-            { start: 4, duration: 0.5, therapist: 'Tommy Teo ', therapy: 'Facial Massage' }   // 14:00 to 16:00
-        ]
-    },
-    {
-        name: 'BED 4',
-        slots: [
-            { start: 3, duration: 1.5, therapist: 'Tommy Teo ', therapy: 'Deep Tissue' }, // 13:00 to 14:30
-            { start: 6, duration: 2, therapist: 'Tommy Teo ', therapy: 'Relax' }   // 17:00 to 19:00
-        ]
-    },
-    {
-        name: 'SEAT 1',
-        slots: []
-    },
-    {
-        name: 'SEAT 2',
-        slots: [
-            { start: 5, duration: 1.5, therapist: 'Tommy Teo ', therapy: 'Healer' }, // 15:00 to 16:30
-            { start: 10, duration: 2, therapist: 'Tommy Teo ', therapy: 'Healer' }   // 19:00 to 21:00
-        ]
-    },
-    // Additional room data here
-];
 
-const Home: NextPage = () => (
-    <div>
-        <h1 className="text-xl font-bold mb-4">Room Management Timeline</h1>
-        <Timeline data={data} />
+
+const Bookings: NextPage = () => (
+    <div className='p-4 flex flex-col gap-4'>
+        <div className="flex items-center justify-between">
+            <h1 className="text-xl font-bold mb-4">Bookings Management Timeline</h1>
+            <StaffForm />
+        </div>
+        <Timeline data={dataBookings} />
     </div>
 );
 
-export default Home;
+export default Bookings;

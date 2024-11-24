@@ -5,7 +5,7 @@ import React from 'react';
 
 const sidebarItems = [
     { id: 1, title: 'Dashboard', linkHref: '/' },
-    { id: 2, title: 'Reservations', linkHref: '/reservations' },
+    { id: 2, title: 'Bookings', linkHref: '/bookings' },
     { id: 3, title: 'Client Management', linkHref: '/clients' },
     { id: 4, title: 'Staff Management', linkHref: '/staff' },
     { id: 5, title: 'Service Management', linkHref: '/services' },

@@ -1,3 +1,4 @@
+'use client'
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -10,7 +11,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { StaffModal } from "@/data/Modal/staff"
+import { IServiceModalProps, servicesModal } from "@/data/Modal/service"
 import RequirePermission from "./RequirePermission"
 import {
     Command,
@@ -25,26 +26,32 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { useState } from "react"
+import { Service } from "@/types/service"
+import { useEffect, useState } from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { ServiceCategories } from "@/data/service"
+import { addOns, stockItems } from "@/data/stock"
 
 interface IInputControl {
-    placeholder: string,
-    disabled: boolean,
+    placeholder?: string,
+    disabled?: boolean,
     isImage?: boolean,
     isDropdown?: boolean,
-    dropdownValue?: { id: string, name: string }[],
+    dropdownValue?: any,
     isHidden?: boolean,
-    label: string,
+    label?: string,
     value?: number | string,
     defaultValue?: string | number
+    isSkipped?: boolean
 }
 
-const InputControl = ({ placeholder, disabled, isImage, label, isHidden, value, defaultValue, isDropdown, dropdownValue }: IInputControl) => {
+const InputControl = ({ placeholder, disabled, isImage, label, isHidden, isSkipped, value, defaultValue, isDropdown, dropdownValue }: IInputControl) => {
     const [open, setOpen] = useState(false)
     const [selectedValue, setSelectedValue] = useState(value || ""); // Initialize with `value` if provided.
 
+    if (isSkipped)
+        return <div></div>
     return (
         <div className="flex flex-col gap-2">
             <Label htmlFor="name">{label}</Label>
@@ -82,7 +89,7 @@ const InputControl = ({ placeholder, disabled, isImage, label, isHidden, value, 
                             {selectedValue // Use `selectedValue` here.
                                 ? typeof dropdownValue?.[0] === "string"
                                     ? selectedValue
-                                    : dropdownValue?.find((item) => item.name === selectedValue)?.name
+                                    : dropdownValue?.find((item: any) => item.name === selectedValue)?.name
                                 : `Select ${label}...`}
                             <ChevronsUpDown className="opacity-50" />
                         </Button>
@@ -93,7 +100,7 @@ const InputControl = ({ placeholder, disabled, isImage, label, isHidden, value, 
                             <CommandList>
                                 <CommandEmpty>No {label} found.</CommandEmpty>
                                 <CommandGroup>
-                                    {dropdownValue?.map((item) =>
+                                    {dropdownValue?.map((item: any) =>
                                         typeof item === "string" ? (
                                             <CommandItem
                                                 key={item}
@@ -145,7 +152,19 @@ const InputControl = ({ placeholder, disabled, isImage, label, isHidden, value, 
 }
 
 
-export function StaffForm() {
+
+export function ServiceForm() {
+    const buildDropdownValue = (type: 'category' | 'addOns' | 'productUsed' | 'requiredLocation') => {
+        switch (type) {
+            case 'category':
+                return servicesModal[type].map(itemId => ServiceCategories.find(item => item.id === itemId)).filter(Boolean); // Filter out any undefined values if a category is not found
+            case 'addOns':
+                return servicesModal[type].map(itemId => addOns.find(item => item.id === itemId)).filter(Boolean); // Filter out any undefined values if a category is not found
+            case 'productUsed':
+                return servicesModal[type].map(itemId => stockItems.find(item => item.id === itemId)).filter(Boolean); // Filter out any undefined values if a category is not found
+        }
+    };
+
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -153,18 +172,22 @@ export function StaffForm() {
             </DialogTrigger>
             <DialogContent className="max-w-screen-md">
                 <DialogHeader>
-                    <DialogTitle>Add Staff</DialogTitle>
+                    <DialogTitle>Add Service</DialogTitle>
                 </DialogHeader>
                 <div className="grid grid-cols-3 gap-4 py-4">
-                    <InputControl disabled label='Name' placeholder="Staff Name" value={StaffModal.name} />
-                    <InputControl disabled label='Email' placeholder="Staff Email" value={StaffModal.email} />
-                    <InputControl disabled label='Role' placeholder="Staff Role" value={StaffModal.role.name} />
-                    <InputControl disabled label='Is Full Time?' placeholder="Is Full Time?" value={StaffModal.isFullTime ? 'Full-time' : 'Part-time'} />
-                    <InputControl disabled isDropdown label='Gender' placeholder="Gender" dropdownValue={[{ id: 'Male', name: 'Male' }, { id: 'Female', name: 'Female' }, { id: 'Others', name: 'Others' }]} />
-                    <InputControl disabled label='Date of Birth' placeholder="Date of Birth" value={`${StaffModal.dateOfBirth}`} />
-                    <InputControl disabled label='Avatar' isImage placeholder="Avatar" value={StaffModal.avatar?.url} />
-                    <InputControl disabled isHidden label='Salary' placeholder="Salary" value={StaffModal.salary} />
-                    <InputControl disabled isDropdown label='Job Capabilities' placeholder="Job Capabilities" dropdownValue={StaffModal?.capabilities} />
+                    <InputControl disabled label='Service ID' placeholder="Service ID" value={servicesModal.id} />
+                    <InputControl disabled label='Name' placeholder="Service Name" value={servicesModal.name} />
+                    <InputControl disabled label='Duration' placeholder="Service duration" value={servicesModal.duration} />
+                    <InputControl disabled label='Price' placeholder="Service Price" value={servicesModal.price} />
+                    <InputControl disabled label='Age Limit' placeholder="Age Limit" value={servicesModal.ageLimit} />
+                    <InputControl disabled label='Level Requirement' placeholder="Therapist level must above this level" value={servicesModal.minLevel} />
+                    <InputControl disabled label='Client Health Restriction' placeholder="Eg. Pregnancy" value={servicesModal.restrictions} />
+                    <InputControl disabled label='Benefits' placeholder="Service Benefits" value={servicesModal.benefits} />
+                    <InputControl disabled label='Category' placeholder="Service Category" isDropdown dropdownValue={buildDropdownValue('category')} />
+                    <InputControl disabled label='Image' placeholder="Image for this Service" isImage value={servicesModal.avatar?.url} />
+                    <InputControl disabled label='Product Used' placeholder="Products that are used for this service" isDropdown dropdownValue={buildDropdownValue("productUsed")} />
+                    <InputControl disabled label='Add Ons' placeholder="Add Ons that are used for this service" isDropdown dropdownValue={buildDropdownValue("addOns")} />
+                    <InputControl isSkipped />
                 </div>
                 <DialogFooter>
                     <Button type="submit">Save changes</Button>

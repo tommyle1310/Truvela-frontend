@@ -18,6 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { Service } from "@/types/service";
+import { ServiceForm } from "@/components/Modal/ServiceForm";
 
 // Define columns for the Service table
 const columns: ColumnDef<Service>[] = [
@@ -134,10 +135,16 @@ const Page = () => {
         <div className="p-4 flex flex-col gap-4">
             <SearchBar />
             <div className="flex items-center gap-2">
-                <div className="text-lg font-bold">Services</div>
-                <Badge className="bg-lavender-success-300 text-lavender-success-800">
-                    {serviceTable.length}
-                </Badge>
+                <div className="flex items-center justify-between w-full">
+                    <div className="items-center flex gap-2">
+
+                        <div className="text-lg font-bold">Services</div>
+                        <Badge className="bg-lavender-success-300 text-lavender-success-800">
+                            {serviceTable.length}
+                        </Badge>
+                    </div>
+                    <ServiceForm />
+                </div>
             </div>
             <GenericTable<Service> data={serviceTable} columns={columns} />
         </div>
