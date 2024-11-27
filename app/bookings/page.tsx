@@ -4,6 +4,7 @@ import { NextPage } from 'next';
 import { START_HOUR, TOTAL_SLOTS } from '@/lib/constants';
 import { dataBookings, TimelineProps } from '@/data/bookings';
 import { StaffForm } from '@/components/Modal/StaffForm';
+import { HoverCardBooking } from '@/components/HoverCard/booking';
 
 
 
@@ -79,15 +80,7 @@ const Timeline: React.FC<TimelineProps> = ({ data }) => {
                             }
 
                             return (
-                                <div
-                                    key={idx}
-                                    className={`absolute top-0 bottom-0 ${bgColor} rounded-md p-1`}
-                                    style={{ left: `${(slot.start * 100) / 13}%`, width: `${slot.duration * 100 / 13}%` }}
-                                >
-                                    <div className="absolute -top-3 -right-5 px-1 flex flex-col text-sm rounded-sm font-semibold bg-white border border-lavender-primary-500 text-lavender-primary-500">{`${slot.duration * 60}m`}</div>
-                                    <p className='font-semibold'>{slot.therapy}</p>
-                                    <p className='text-xs'>{slot.therapist}</p>
-                                </div>
+                                <HoverCardBooking bgColor={bgColor} idx={idx} slot={slot} key={idx} />
                             );
                         })}
                     </div>
@@ -101,7 +94,7 @@ const Timeline: React.FC<TimelineProps> = ({ data }) => {
 
 
 const Bookings: NextPage = () => (
-    <div className='p-4 flex flex-col gap-4'>
+    <div className='p-4 flex flex-col'>
         <div className="flex items-center justify-between">
             <h1 className="text-xl font-bold mb-4">Bookings Management Timeline</h1>
             <StaffForm />

@@ -2,8 +2,13 @@ interface Slot {
     start: number;
     duration: number;
     id?: string;
-    therapy: string;
-    therapist: string
+    therapy: { image?: string, name: string };
+    therapist: string,
+    client: string,
+    note?: {
+        coordinator?: string,
+        client?: string
+    }
 }
 
 interface Room {
@@ -14,47 +19,127 @@ interface Room {
 export interface TimelineProps {
     data: Room[];
 }
-
 export const dataBookings: Room[] = [
     {
         name: 'BED 1',
         slots: [
-            { id: `booking_${Math.random() * 100000}`, start: 0, duration: 2, therapist: 'Tommy Teo ', therapy: 'Healer' }, // 10:00 to 12:00
-            { id: `booking_${Math.random() * 100000}`, start: 5, duration: 1, therapist: 'Tommy Teo ', therapy: 'Relax' }   // 15:00 to 16:00
-        ]
+            {
+                start: 0,
+                duration: 2,
+                therapy: { name: 'Healer', image: 'https://github.com/shadcn.png' },
+                therapist: 'Tommy Teo',
+                client: 'Client A',
+                note: {
+                    coordinator: 'Coordinator A',
+                    client: 'Notes about Client A',
+                },
+            },
+            {
+                start: 5,
+                duration: 1,
+                therapy: { name: 'Relax', image: 'https://github.com/shadcn.png' },
+                therapist: 'Tommy Teo',
+                client: 'Client B',
+                note: {
+                    coordinator: 'Coordinator B',
+                },
+            },
+        ],
     },
     {
         name: 'BED 2',
         slots: [
-            { id: `booking_${Math.random() * 100000}`, start: 0, duration: 2.5, therapist: 'Tommy Teo ', therapy: 'Crystal Healing' }, // 10:00 to 11:30
-            { id: `booking_${Math.random() * 100000}`, start: 3, duration: 2, therapist: 'Tommy Teo ', therapy: 'Stretch' },   // 13:00 to 15:00
-            { id: `booking_${Math.random() * 100000}`, start: 6, duration: 2, therapist: 'Tommy Teo ', therapy: 'Relax' }   // 13:00 to 15:00
-        ]
+            {
+                start: 0,
+                duration: 2.5,
+                therapy: { image: 'https://github.com/shadcn.png', name: 'Crystal Healing' },
+                therapist: 'Tommy Teo',
+                client: 'Client C',
+            },
+            {
+                start: 3,
+                duration: 2,
+                therapy: { image: 'https://github.com/shadcn.png', name: 'Stretch' },
+                therapist: 'Tommy Teo',
+                client: 'Client D',
+                note: {
+                    client: 'Prefers warm room',
+                },
+            },
+            {
+                start: 6,
+                duration: 2,
+                therapy: { image: 'https://github.com/shadcn.png', name: 'Relax' },
+                therapist: 'Tommy Teo',
+                client: 'Client E',
+            },
+        ],
     },
     {
         name: 'BED 3',
         slots: [
-            { id: `booking_${Math.random() * 100000}`, start: 2, duration: 1.5, therapist: 'Tommy Teo ', therapy: 'Bloom' }, // 12:00 to 13:30
-            { id: `booking_${Math.random() * 100000}`, start: 4, duration: 0.5, therapist: 'Tommy Teo ', therapy: 'Facial Massage' }   // 14:00 to 16:00
-        ]
+            {
+                start: 2,
+                duration: 1.5,
+                therapy: { image: 'https://github.com/shadcn.png', name: 'Bloom' },
+                therapist: 'Tommy Teo',
+                client: 'Client F',
+            },
+            {
+                start: 4,
+                duration: 0.5,
+                therapy: { image: 'https://github.com/shadcn.png', name: 'Facial Massage' },
+                therapist: 'Tommy Teo',
+                client: 'Client G',
+            },
+        ],
     },
     {
         name: 'BED 4',
         slots: [
-            { id: `booking_${Math.random() * 100000}`, start: 3, duration: 1.5, therapist: 'Tommy Teo ', therapy: 'Deep Tissue' }, // 13:00 to 14:30
-            { id: `booking_${Math.random() * 100000}`, start: 6, duration: 2, therapist: 'Tommy Teo ', therapy: 'Relax' }   // 17:00 to 19:00
-        ]
+            {
+                start: 3,
+                duration: 1.5,
+                therapy: { image: 'https://github.com/shadcn.png', name: 'Deep Tissue' },
+                therapist: 'Tommy Teo',
+                client: 'Client H',
+                note: {
+                    coordinator: 'Coordinator H',
+                },
+            },
+            {
+                start: 6,
+                duration: 2,
+                therapy: { image: 'https://github.com/shadcn.png', name: 'Relax' },
+                therapist: 'Tommy Teo',
+                client: 'Client I',
+            },
+        ],
     },
     {
         name: 'SEAT 1',
-        slots: []
+        slots: [],
     },
     {
         name: 'SEAT 2',
         slots: [
-            { start: 5, duration: 1.5, therapist: 'Tommy Teo ', therapy: 'Healer' }, // 15:00 to 16:30
-            { start: 10, duration: 2, therapist: 'Tommy Teo ', therapy: 'Healer' }   // 19:00 to 21:00
-        ]
+            {
+                start: 5,
+                duration: 1.5,
+                therapy: { image: 'https://github.com/shadcn.png', name: 'Healer' },
+                therapist: 'Tommy Teo',
+                client: 'Client J',
+            },
+            {
+                start: 10,
+                duration: 2,
+                therapy: { image: 'https://github.com/shadcn.png', name: 'Healer' },
+                therapist: 'Tommy Teo',
+                client: 'Client K',
+                note: {
+                    client: 'Requires extra support',
+                },
+            },
+        ],
     },
-    // Additional room data here
 ];
