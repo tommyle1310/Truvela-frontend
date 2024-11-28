@@ -4,7 +4,7 @@ export type ReportItem = {
     status: 'Pending' | 'Resolved' | 'Escalated'; // Added 'Escalated' for additional status handling
     senderId: User['id']; // ID of the person who submitted the report
     senderName: User['name']; // ID of the person who submitted the report
-    senderRole?: 'Client' | 'Staff' | 'Admin'; // Optional: Identify the sender's role
+    senderRole?: 'Client' | 'Staff' | 'Others'; // Optional: Identify the sender's role
     content: string; // The actual content or description of the report
     dateTime: Date; // Date and time when the report was submitted
     note?: string; // Optional notes added by the admin or handler

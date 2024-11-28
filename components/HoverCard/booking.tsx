@@ -29,6 +29,16 @@ interface IHoverCardBooking {
     }
 }
 
+function formatTime(inputTime: number) {
+    const toTimeString = (hour: number) => {
+        const hours = Math.floor(hour);
+        const minutes = (hour % 1) * 60;
+        return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+    };
+
+    return `${toTimeString(inputTime + 10)}`
+}
+
 export function HoverCardBooking({ idx, slot, bgColor }: IHoverCardBooking) {
     return (
         <HoverCard>
@@ -63,8 +73,8 @@ export function HoverCardBooking({ idx, slot, bgColor }: IHoverCardBooking) {
                     </div>
                     <Separator orientation="vertical" />
                     <div className="flex items-center gap-2">
-                        <p>Start: <span className="font-semibold text-lavender-info-600">10:00</span></p>
-                        <p>End: <span className="font-semibold text-lavender-warning-600">11:00</span></p>
+                        <p>Start: <span className="font-semibold text-lavender-info-600">{formatTime(slot.start)}</span></p>
+                        <p>End: <span className="font-semibold text-lavender-warning-600">{formatTime(slot.start + slot.duration)}</span></p>
                     </div>
                 </div>
                 <Separator />

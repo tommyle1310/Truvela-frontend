@@ -20,8 +20,43 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs"
 import { reportList } from "@/data/reports"
+import { ReportItem } from "@/types/report"
 import { faCopy } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { format } from "date-fns"
+
+export const TabContentRender = ({ value, data }: { value: string, data: ReportItem[] }) => {
+    return (
+        <TabsContent value={value} className="grid grid-cols-4 gap-3">
+            {data.map(data => {
+                if (data.senderRole === value)
+                    return (
+                        <Card className={`text-sm ${data.priority === 'High' ? 'border-lavender-danger-300' : (data.priority === 'Low' ? 'border-lavender-success-300' : 'border-lavender-info-300')} border-2`}>
+                            <CardHeader className="p-2">
+                                <div className="flex items-center justify-between">
+                                    <CardTitle>{data.senderName}</CardTitle>
+                                    <div className="flex items-center gap-1 text-sm">
+                                        <p className="">ID: <span className=" font-bold">{data.id}</span></p>
+                                        <Button className="p-2" variant={'outline'} onClick={() => navigator.clipboard.writeText(data.id)}                            >
+                                            <FontAwesomeIcon icon={faCopy} size="sm" fill="#8C6EB8" />
+                                        </Button>
+                                    </div>
+                                </div>
+                                <CardDescription>{data.senderRole}
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-2 p-2 text-xs">
+                                <p>Date: <span className="text-lavender-primary-600 font-bold">{format(data.dateTime, "HH:mm - dd/MM/yyyy")}</span></p>
+                            </CardContent>
+                            <CardFooter className="p-2">
+                                <ReportDetailModal data={data} />
+                            </CardFooter>
+                        </Card>
+                    )
+            })}
+        </TabsContent>
+    )
+}
 
 const Page = () => {
     return (
@@ -31,88 +66,18 @@ const Page = () => {
                 <DatePicker />
             </div>
             <div className="self-end">
-
                 <Select />
             </div>
             <Tabs defaultValue="Client" className="w-full">
-                <TabsList className="grid w-full grid-cols-3 ">
+                <TabsList className="grid w-full grid-cols-3 bg-lavender-primary-200">
                     <TabsTrigger value="Client">Client</TabsTrigger>
                     <TabsTrigger value="Staff">Staff</TabsTrigger>
                     <TabsTrigger value="Others">Others</TabsTrigger>
                 </TabsList>
-                <TabsContent value="Client" className="grid grid-cols-4 gap-3">
-                    {reportList.map(item => {
-                        return (
-                            <Card className="text-sm">
-                                <CardHeader className="p-2">
-                                    <div className="flex items-center justify-between">
-                                        <CardTitle>Client A</CardTitle>
-                                        <div className="flex items-center gap-1 text-sm">
-                                            <p className="">ID: <span className=" font-bold">{item.id}</span></p>
-                                            <Button className="p-2" variant={'outline'} onClick={() => navigator.clipboard.writeText('abcd')}                            >
-                                                <FontAwesomeIcon icon={faCopy} size="sm" />
-                                            </Button>
-                                        </div>
-                                    </div>
-                                    <CardDescription>{item.senderRole}
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent className="space-y-2 p-2 text-xs">
-                                    <p>Date submitted: <span className="text-lavender-primary-600 font-bold">11:47AM - 21/11 </span></p>
-                                </CardContent>
-                                <CardFooter className="p-2">
-                                    <ReportDetailModal data={item} />
-                                </CardFooter>
-                            </Card>
-                        )
-                    })}
-                </TabsContent>
-                <TabsContent value="Staff">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Password</CardTitle>
-                            <CardDescription>
-                                Change your password here. After saving, you'll be logged out.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-2">
-                            <div className="space-y-1">
-                                <Label htmlFor="current">Current password</Label>
-                                <Input id="current" type="password" />
-                            </div>
-                            <div className="space-y-1">
-                                <Label htmlFor="new">New password</Label>
-                                <Input id="new" type="password" />
-                            </div>
-                        </CardContent>
-                        <CardFooter>
-                            <Button>Save password</Button>
-                        </CardFooter>
-                    </Card>
-                </TabsContent>
-                <TabsContent value="Others">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Password</CardTitle>
-                            <CardDescription>
-                                Change your password here. After saving, you'll be logged out.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-2">
-                            <div className="space-y-1">
-                                <Label htmlFor="current">Current password</Label>
-                                <Input id="current" type="password" />
-                            </div>
-                            <div className="space-y-1">
-                                <Label htmlFor="new">New password</Label>
-                                <Input id="new" type="password" />
-                            </div>
-                        </CardContent>
-                        <CardFooter>
-                            <Button>Save password</Button>
-                        </CardFooter>
-                    </Card>
-                </TabsContent>
+
+                <TabContentRender value='Client' data={reportList} />
+                <TabContentRender value='Staff' data={reportList} />
+                <TabContentRender value='Others' data={reportList} />
             </Tabs>
         </div>
     )
