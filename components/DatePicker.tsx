@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 
@@ -11,13 +11,24 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 
-export function DatePicker() {
-    const [rawSelectedDate, setRawSelectedDate] = useState<Date | null>(null)
-    const [selectedDate, setselectedDate] = useState<number | null>(null)
-    useEffect(() => {
-        if (rawSelectedDate)
-            setselectedDate(Math.floor(rawSelectedDate.getTime() / 1000))
-    }, [rawSelectedDate])
+export function DatePicker({ setPropSelectedDate, selectedDate }: { selectedDate: number, setPropSelectedDate: Dispatch<SetStateAction<number>> }) {
+    // UseEffect can be uncommented if you need to sync selectedDate from prop to state
+    // useEffect(() => {
+    //     if (selectedDate) {
+    //         setPropSelectedDate(selectedDate)
+    //     }
+    // }, [selectedDate])
+
+    // Check for valid selectedDate
+    const formattedDate = selectedDate ? format(new Date(selectedDate * 1000), "PPP") : "Pick a date";
+
+    // Convert the Date to timestamp and set it
+    const handleDateSelect = (date: Date | undefined) => {
+        if (date) {
+            setPropSelectedDate(Math.floor(date.getTime() / 1000)); // Convert to timestamp (in seconds)
+        }
+    };
+
     return (
         <div className="space-y-8">
             <div className="flex flex-col">
@@ -27,24 +38,20 @@ export function DatePicker() {
                             variant={"outline"}
                             className={cn(
                                 "w-[240px] pl-3 text-left font-normal",
-                                !rawSelectedDate && "text-muted-foreground"
+                                !selectedDate && "text-muted-foreground"
                             )}
                         >
-                            {rawSelectedDate ? (
-                                format(rawSelectedDate, "PPP")
-                            ) : (
-                                <span>Pick a date</span>
-                            )}
+                            {formattedDate}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                         </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                             mode="single"
-                            selected={rawSelectedDate}
-                            onSelect={setRawSelectedDate}
+                            selected={new Date(selectedDate * 1000)}
+                            onSelect={handleDateSelect} // Use the new handler
                             disabled={(date) =>
-                                date > new Date() || date < new Date("1900-01-01")
+                                date < new Date("1900-01-01")
                             }
                             initialFocus
                         />

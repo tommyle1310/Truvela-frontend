@@ -6,6 +6,7 @@ import { dataBookings, TimelineProps } from '@/data/bookings';
 import { StaffForm } from '@/components/Modal/StaffForm';
 import { HoverCardBooking } from '@/components/HoverCard/booking';
 import { DatePicker } from '@/components/DatePicker';
+import { areTimestampsOnSameDate } from '@/functions/formatTime';
 
 
 
@@ -30,7 +31,6 @@ const Timeline: React.FC<TimelineProps> = ({ data }) => {
 
             // If the hour is within our tracked range, calculate the percentageLeft
             if (hourIndex >= 0 && hourIndex < totalSlots) {
-                console.log(hourIndex * slotWidth)
                 const basePercentage = hourIndex * slotWidth; // Base percentage for the start of the hour slot
                 const minuteFraction = minute / 60; // Fractional percentage within the hour
                 const percentageLeft = basePercentage + minuteFraction * slotWidth;
@@ -60,7 +60,7 @@ const Timeline: React.FC<TimelineProps> = ({ data }) => {
                 ></div>
 
             </div>
-            {data[0].rooms.map((room, index) => (
+            {data?.map((room, index) => (
                 <div key={index} className="flex items-center my-2">
                     <div className="w-24 font-bold text-center bg-white">{room.name}</div>
                     <div className="relative flex-grow h-14  ">
@@ -94,14 +94,20 @@ const Timeline: React.FC<TimelineProps> = ({ data }) => {
 
 
 
-const Bookings: NextPage = () => (
-    <div className='p-4 flex flex-col gap-4'>
-        <div className="flex items-center justify-between">
-            <h3 className="text-lavender-primary-600 text-xl font-bold">Bookings</h3>
-            <DatePicker />
+const Bookings: NextPage = () => {
+    const [selectedDate, setSelectedDate] = useState<number>(Math.floor(new Date().getTime() / 1000));
+
+    return (
+        <div className='p-4 flex flex-col gap-4'>
+            <div className="flex items-center justify-between">
+                <h3 className="text-lavender-primary-600 text-xl font-bold">Bookings</h3>
+                <DatePicker selectedDate={selectedDate} setPropSelectedDate={setSelectedDate} />
+            </div>
+            <Timeline data={dataBookings && dataBookings.find(item => {
+                return areTimestampsOnSameDate(selectedDate, item.timestamp)
+            })?.rooms} />
         </div>
-        <Timeline data={dataBookings} />
-    </div>
-);
+    );
+}
 
 export default Bookings;

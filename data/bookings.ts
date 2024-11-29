@@ -16,13 +16,11 @@ interface Room {
     slots: Slot[];
 }
 
-export interface TimelineProps {
-    data: Array<{ timestamp: number; rooms: Room[] }>
-}
+export type TimelineProps = { data: Room[] | undefined }
 
 export const dataBookings: Array<{ timestamp: number; rooms: Room[] }> = [
     {
-        timestamp: 1701264000,
+        timestamp: 1732813200,
         rooms: [
             {
                 name: 'BED 1',
