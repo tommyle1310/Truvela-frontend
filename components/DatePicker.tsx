@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 
@@ -12,8 +12,12 @@ import {
 } from "@/components/ui/popover"
 
 export function DatePicker() {
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null)
-
+    const [rawSelectedDate, setRawSelectedDate] = useState<Date | null>(null)
+    const [selectedDate, setselectedDate] = useState<number | null>(null)
+    useEffect(() => {
+        if (rawSelectedDate)
+            setselectedDate(Math.floor(rawSelectedDate.getTime() / 1000))
+    }, [rawSelectedDate])
     return (
         <div className="space-y-8">
             <div className="flex flex-col">
@@ -23,11 +27,11 @@ export function DatePicker() {
                             variant={"outline"}
                             className={cn(
                                 "w-[240px] pl-3 text-left font-normal",
-                                !selectedDate && "text-muted-foreground"
+                                !rawSelectedDate && "text-muted-foreground"
                             )}
                         >
-                            {selectedDate ? (
-                                format(selectedDate, "PPP")
+                            {rawSelectedDate ? (
+                                format(rawSelectedDate, "PPP")
                             ) : (
                                 <span>Pick a date</span>
                             )}
@@ -37,8 +41,8 @@ export function DatePicker() {
                     <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                             mode="single"
-                            selected={selectedDate}
-                            onSelect={setSelectedDate}
+                            selected={rawSelectedDate}
+                            onSelect={setRawSelectedDate}
                             disabled={(date) =>
                                 date > new Date() || date < new Date("1900-01-01")
                             }

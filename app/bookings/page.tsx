@@ -5,6 +5,7 @@ import { START_HOUR, TOTAL_SLOTS } from '@/lib/constants';
 import { dataBookings, TimelineProps } from '@/data/bookings';
 import { StaffForm } from '@/components/Modal/StaffForm';
 import { HoverCardBooking } from '@/components/HoverCard/booking';
+import { DatePicker } from '@/components/DatePicker';
 
 
 
@@ -59,7 +60,7 @@ const Timeline: React.FC<TimelineProps> = ({ data }) => {
                 ></div>
 
             </div>
-            {data.map((room, index) => (
+            {data[0].rooms.map((room, index) => (
                 <div key={index} className="flex items-center my-2">
                     <div className="w-24 font-bold text-center bg-white">{room.name}</div>
                     <div className="relative flex-grow h-14  ">
@@ -94,10 +95,10 @@ const Timeline: React.FC<TimelineProps> = ({ data }) => {
 
 
 const Bookings: NextPage = () => (
-    <div className='p-4 flex flex-col'>
+    <div className='p-4 flex flex-col gap-4'>
         <div className="flex items-center justify-between">
-            <h1 className="text-xl font-bold mb-4">Bookings Management Timeline</h1>
-            <StaffForm />
+            <h3 className="text-lavender-primary-600 text-xl font-bold">Bookings</h3>
+            <DatePicker />
         </div>
         <Timeline data={dataBookings} />
     </div>
