@@ -54,7 +54,8 @@ export function ReportDetailModal({ data }: { data: ReportItem }) {
                     </ScrollArea>
 
                 </div>
-                <DialogFooter>
+                <DialogFooter className="flex items-center justify-between">
+                    <Button variant={'outline'} className="">Assign Task</Button>
                     <Button type="submit">Save changes</Button>
                 </DialogFooter>
             </DialogContent>
