@@ -41,10 +41,10 @@ const Sidebar = () => {
 
     return (
         <div className="flex flex-col items-center border bg-white">
-            {sidebarItems.map((item) => {
+            {sidebarItems.map((item, index) => {
                 if (item.isPopover) {
                     return (
-                        <Popover >
+                        <Popover key={Math.random() * 134712353252}>
                             <PopoverTrigger className='text-left w-full p-2 bg-lavender-info-100 text-lavender-info-800'><div>Manager</div></PopoverTrigger>
                             <PopoverContent className="w-42">
                                 <div className="flex flex-col gap-2">

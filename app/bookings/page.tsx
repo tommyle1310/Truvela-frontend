@@ -14,6 +14,8 @@ import { areTimestampsOnSameDate } from '@/functions/formatTime';
 const Timeline: React.FC<TimelineProps> = ({ data }) => {
     const hours = Array.from({ length: TOTAL_SLOTS + 1 }, (_, i) => i); // [0, 1, ..., 12]
     const [currentTimeLeft, setCurrentTimeLeft] = useState(0);
+    const [selectedDate, setSelectedDate] = useState<number>(Math.floor(new Date().getTime() / 1000));
+
 
     useEffect(() => {
         const updateCurrentTimeLeft = () => {
@@ -45,7 +47,6 @@ const Timeline: React.FC<TimelineProps> = ({ data }) => {
         return () => clearInterval(interval);
     }, []);
 
-
     return (
         <div className="relative overflow-x-auto whitespace-nowrap ">
             <div className="flex relative ml-24 bg-gray-200 rounded-md overflow-hidden">
@@ -60,7 +61,7 @@ const Timeline: React.FC<TimelineProps> = ({ data }) => {
                 ></div>
 
             </div>
-            {data?.map((room, index) => (
+            {data ? data.map((room, index) => (
                 <div key={index} className="flex items-center my-2">
                     <div className="w-24 font-bold text-center bg-white">{room.name}</div>
                     <div className="relative flex-grow h-14  ">
@@ -86,7 +87,17 @@ const Timeline: React.FC<TimelineProps> = ({ data }) => {
                         })}
                     </div>
                 </div>
-            ))}
+            )) : <div className='ml-24 bg-[#ead7ce] flex flex-col items-center p-6'>
+                <div
+                    className="w-2/5 aspect-square mt-10 mb-8"
+                    style={{
+                        backgroundImage: `url('https://res.cloudinary.com/dlavqnrlx/image/upload/v1733450667/qqwqpgzhtmymkjmvv0vy.jpg')`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
+                    }}
+                ></div>
+                <h3 className=' text-xl font-bold text-lavender-info-600'>No Bookings on this day.</h3>
+            </div>}
 
         </div>
     );
@@ -104,6 +115,7 @@ const Bookings: NextPage = () => {
                 <DatePicker selectedDate={selectedDate} setPropSelectedDate={setSelectedDate} />
             </div>
             <Timeline data={dataBookings && dataBookings.find(item => {
+                // console.log('cehck ảe', areTimestampsOnSameDate(selectedDate, item.timestamp))
                 return areTimestampsOnSameDate(selectedDate, item.timestamp)
             })?.rooms} />
         </div>
