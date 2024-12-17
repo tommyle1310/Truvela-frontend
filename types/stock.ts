@@ -55,7 +55,7 @@ export interface Stock {
     avatar?: string;    // Optional field for product image
     stockLocation: StockLocation;
     usageRate: string;    // e.g., "High", "Medium", "Low"
-    expireDate?: Date;    // Optional field for expiration date
+    expireAfter?: number;    // Optional field for expiration date
 }
 
 

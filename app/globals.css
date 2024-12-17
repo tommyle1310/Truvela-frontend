@@ -76,3 +76,8 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+  .hv {
+@apply hover:duration-300 cursor-pointer
+  }

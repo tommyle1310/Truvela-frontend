@@ -100,12 +100,12 @@ const columns: ColumnDef<Stock>[] = [
         ),
     },
     {
-        accessorKey: "expireDate",
-        header: "Expire Date",
+        accessorKey: "expireAfter",
+        header: "Expire after",
         cell: ({ row }) => (
             <span>
-                {row.getValue("expireDate")
-                    ? new Date(row.getValue("expireDate") as string).toLocaleDateString()
+                {row.getValue("expireAfter")
+                    ? (row.getValue("expireAfter") as string)
                     : "N/A"}
             </span>
         ),

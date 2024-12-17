@@ -1,6 +1,6 @@
 import { SpaLocation } from "@/types/spa";
 
-const spaLocations: SpaLocation[] = [
+export const spaLocations: SpaLocation[] = [
     {
         id: 'LOC_1',
         name: 'Sunset Spa',

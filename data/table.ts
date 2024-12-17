@@ -83,7 +83,6 @@ export const serviceTable: Service[] = [
 
 ];
 
-
 export const stockTable: Stock[] = [
     {
         id: "st-001",
@@ -102,7 +101,7 @@ export const stockTable: Stock[] = [
             },
         },
         usageRate: "High",
-        expireDate: new Date("2025-06-30"),
+        expireAfter: 30,
     },
     {
         id: "st-002",
@@ -121,7 +120,7 @@ export const stockTable: Stock[] = [
             },
         },
         usageRate: "Medium",
-        expireDate: new Date("2024-12-15"),
+        expireAfter: 60
     },
     {
         id: "st-003",
@@ -140,7 +139,7 @@ export const stockTable: Stock[] = [
             },
         },
         usageRate: "Low",
-        expireDate: new Date("2026-03-20"),
+        expireAfter: 90
     },
 ]
 

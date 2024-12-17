@@ -82,7 +82,7 @@ export const stockItems: Stock[] = [
         avatar: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/coconut-oil.jpg",
         stockLocation: stockLocations[0],
         usageRate: "High",
-        expireDate: new Date("2024-12-31"),
+        expireAfter: 30,
     },
     {
         id: "stock002",
@@ -94,7 +94,7 @@ export const stockItems: Stock[] = [
         avatar: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/collagen-mask.jpg",
         stockLocation: stockLocations[1],
         usageRate: "Medium",
-        expireDate: new Date("2025-03-15"),
+        expireAfter: 15,
     },
     {
         id: "stock003",
@@ -106,7 +106,7 @@ export const stockItems: Stock[] = [
         avatar: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/peppermint-oil.jpg",
         stockLocation: stockLocations[0],
         usageRate: "Low",
-        expireDate: undefined,
+        expireAfter: 30,
     },
 ];
 
