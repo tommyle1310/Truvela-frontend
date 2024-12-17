@@ -1,4 +1,4 @@
-import { AddOns, Stock, StockCategory, StockLocation, TreatmentProduct } from "@/types/stock";
+import { AddOns, ProductCategory, Stock, StockCategory, StockLocation, TreatmentProduct } from "@/types/stock";
 
 // Sample Treatment Products
 export const treatmentProducts: TreatmentProduct[] = [
@@ -79,10 +79,7 @@ export const stockItems: Stock[] = [
         price: 30,
         quantity: 20,
         description: "All-natural coconut oil for deep-tissue massages.",
-        imageUrl: {
-            url: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/coconut-oil.jpg",
-            key: "coconut_massage_oil",
-        },
+        avatar: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/coconut-oil.jpg",
         stockLocation: stockLocations[0],
         usageRate: "High",
         expireDate: new Date("2024-12-31"),
@@ -94,10 +91,7 @@ export const stockItems: Stock[] = [
         price: 50,
         quantity: 15,
         description: "Hydrating face mask for anti-aging treatment.",
-        imageUrl: {
-            url: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/collagen-mask.jpg",
-            key: "collagen_face_mask",
-        },
+        avatar: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/collagen-mask.jpg",
         stockLocation: stockLocations[1],
         usageRate: "Medium",
         expireDate: new Date("2025-03-15"),
@@ -109,12 +103,36 @@ export const stockItems: Stock[] = [
         price: 20,
         quantity: 10,
         description: "Refreshing peppermint oil for aromatherapy.",
-        imageUrl: {
-            url: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/peppermint-oil.jpg",
-            key: "peppermint_oil",
-        },
+        avatar: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/peppermint-oil.jpg",
         stockLocation: stockLocations[0],
         usageRate: "Low",
         expireDate: undefined,
     },
+];
+
+export const productCategories: ProductCategory[] = [
+    {
+        id: 'PC_1',
+        name: 'Wellness',
+        description: 'Products related to overall wellness, including body care, supplements, and fitness.',
+        isActive: true,
+        createdAt: 1672873100000, // Timestamp for creation date
+        updatedAt: 1672873100000, // Timestamp for last update
+    },
+    {
+        id: 'PC_2',
+        name: 'Beauty',
+        description: 'Beauty products such as skincare, makeup, and grooming essentials.',
+        isActive: true,
+        createdAt: 1672873200000, // Timestamp for creation date
+        updatedAt: 1672873200000, // Timestamp for last update
+    },
+    {
+        id: 'PC_3',
+        name: 'Spa Accessories',
+        description: 'Specialized products for spa treatments including oils, towels, and relaxation tools.',
+        isActive: false,
+        createdAt: 1672873300000, // Timestamp for creation date
+        updatedAt: 1672873300000, // Timestamp for last update
+    }
 ];

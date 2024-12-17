@@ -18,6 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { Stock } from "@/types/stock";
+import { StockForm } from "@/components/Modal/StockForm";
 
 const columns: ColumnDef<Stock>[] = [
     {
@@ -48,7 +49,7 @@ const columns: ColumnDef<Stock>[] = [
         cell: ({ row }) => (
             <div className="flex items-center space-x-2">
                 <img
-                    src={row.original.imageUrl || ""}
+                    src={row.original.avatar || ""}
                     alt={row.original.name}
                     className="h-8 w-8 rounded-full"
                 />
@@ -145,10 +146,15 @@ const Page = () => {
         <div className="p-4 flex flex-col gap-4">
             <SearchBar />
             <div className="flex items-center gap-2">
-                <div className="text-lg font-bold">Stocks</div>
-                <Badge className="bg-lavender-success-300 text-lavender-success-800">
-                    {stockTable.length}
-                </Badge>
+                <div className="flex items-center justify-between w-full">
+                    <div className="items-center flex gap-2">
+                        <div className="text-lg font-bold">Stocks</div>
+                        <Badge className="bg-lavender-success-300 text-lavender-success-800">
+                            {stockTable.length}
+                        </Badge>
+                    </div>
+                    <StockForm />
+                </div>
             </div>
             <GenericTable<Stock> data={stockTable} columns={columns} />
         </div>

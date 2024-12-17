@@ -41,7 +41,7 @@ export interface StockLocation {
     id: string;
     name: string;
     avatar?: { url: string; key: string };
-    description: string
+    description?: string
 }
 
 // Interface for Stock Items
@@ -52,8 +52,18 @@ export interface Stock {
     price: number;
     quantity: number;
     description?: string; // Optional field
-    imageUrl?: { url: string, key: string };    // Optional field for product image
+    avatar?: string;    // Optional field for product image
     stockLocation: StockLocation;
     usageRate: string;    // e.g., "High", "Medium", "Low"
     expireDate?: Date;    // Optional field for expiration date
+}
+
+
+export interface ProductCategory {
+    id: string,
+    name: string,
+    description: string,
+    isActive: boolean,
+    createdAt: number,
+    updatedAt: number
 }

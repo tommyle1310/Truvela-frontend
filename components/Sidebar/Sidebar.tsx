@@ -29,11 +29,12 @@ const sidebarItems: SideBarItem[] = [
 
     { id: 8, title: 'Revenue & Financials', linkHref: '/financials' },
     { id: 9, title: 'Inventory & Products', linkHref: '/inventory' },
-    { id: 10, title: 'Tasks & To-Do List', linkHref: '/tasks' },
-    { id: 11, title: 'Reports & Analytics', linkHref: '/reports' },
-    { id: 12, title: 'Notifications & Alerts', linkHref: '/notifications' },
-    { id: 13, title: 'Settings', linkHref: '/settings' },
-    { id: 14, title: 'Log Out', linkHref: '/logout' }
+    { id: 10, title: 'Discounts & Promotions', linkHref: '/discounts_promotions' },
+    { id: 11, title: 'Tasks & To-Do List', linkHref: '/tasks' },
+    { id: 12, title: 'Reports & Analytics', linkHref: '/reports' },
+    { id: 13, title: 'Notifications & Alerts', linkHref: '/notifications' },
+    { id: 14, title: 'Settings', linkHref: '/settings' },
+    { id: 15, title: 'Log Out', linkHref: '/logout' }
 ];
 
 const Sidebar = () => {

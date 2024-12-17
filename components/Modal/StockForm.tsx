@@ -31,7 +31,8 @@ import { useEffect, useState } from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ServiceCategories } from "@/data/service"
-import { addOns, stockItems } from "@/data/stock"
+import { addOns, productCategories, stockItems } from "@/data/stock"
+import { stockModalData } from "@/data/Modal/stock"
 
 interface IInputControl {
     placeholder?: string,
@@ -153,15 +154,15 @@ const InputControl = ({ placeholder, disabled, isImage, label, isHidden, isSkipp
 
 
 
-export function ServiceForm() {
-    const buildDropdownValue = (type: 'category' | 'addOns' | 'productUsed' | 'requiredLocation') => {
+export function StockForm() {
+    const buildDropdownValue = (type: 'category') => {
         switch (type) {
             case 'category':
-                return servicesModal[type].map(itemId => ServiceCategories.find(item => item.id === itemId)).filter(Boolean); // Filter out any undefined values if a category is not found
-            case 'addOns':
-                return servicesModal[type].map(itemId => addOns.find(item => item.id === itemId)).filter(Boolean); // Filter out any undefined values if a category is not found
-            case 'productUsed':
-                return servicesModal[type].map(itemId => stockItems.find(item => item.id === itemId)).filter(Boolean); // Filter out any undefined values if a category is not found
+                return stockModalData[type]?.map(a => {
+                    return productCategories.find(b => {
+                        return a.id === b.id;
+                    });
+                });
         }
     };
 
@@ -172,26 +173,26 @@ export function ServiceForm() {
             </DialogTrigger>
             <DialogContent className="max-w-screen-md">
                 <DialogHeader>
-                    <DialogTitle>Add Service</DialogTitle>
+                    <DialogTitle>Add Product</DialogTitle>
                 </DialogHeader>
                 <div className="grid grid-cols-3 gap-4 py-4">
-                    <InputControl disabled label='Service ID' placeholder="Service ID" value={servicesModal.id} />
-                    <InputControl disabled label='Name' placeholder="Service Name" value={servicesModal.name} />
-                    <InputControl disabled label='Duration' placeholder="Service duration" value={servicesModal.duration} />
-                    <InputControl disabled label='Price' placeholder="Service Price" value={servicesModal.price} />
-                    <InputControl disabled label='Age Limit' placeholder="Age Limit" value={servicesModal.ageLimit} />
-                    <InputControl disabled label='Level Requirement' placeholder="Therapist level must above this level" value={servicesModal.minLevel} />
-                    <InputControl disabled label='Client Health Restriction' placeholder="Eg. Pregnancy" value={servicesModal.restrictions} />
-                    <InputControl disabled label='Benefits' placeholder="Service Benefits" value={servicesModal.benefits} />
-                    <InputControl disabled label='Category' placeholder="Service Category" isDropdown dropdownValue={buildDropdownValue('category')} />
-                    <InputControl disabled label='Image' placeholder="Image for this Service" isImage value={servicesModal.avatar?.url} />
-                    <div className="grid-cols-2 grid gap-4 col-span-2">
-                        <InputControl disabled label='Product Used' placeholder="Products that are used for this service" isDropdown dropdownValue={buildDropdownValue("productUsed")} />
-                        <InputControl disabled label='Add Ons' placeholder="Add Ons that are used for this service" isDropdown dropdownValue={buildDropdownValue("addOns")} />
+                    <InputControl disabled label='Product ID' placeholder="PRO_1" value={stockModalData.id} />
+                    <InputControl disabled label='Product Name' placeholder="Lavender Oil" value={stockModalData.name} />
+                    <InputControl disabled label='Cost Price' placeholder="30" value={stockModalData.costPrice} />
+                    <InputControl disabled label='Selling Price' placeholder="31" value={stockModalData.sellingPrice} />
+                    <InputControl disabled label='Count Unit' placeholder="Kilogram" value={stockModalData.countUnit} />
+                    <InputControl disabled label='Expire after' placeholder="30 days" value={stockModalData.expireAfter} />
+                    <InputControl disabled label='Category' placeholder="Skincare" isDropdown dropdownValue={buildDropdownValue("category")} />
+                    <InputControl disabled label='Available Spa' placeholder="Sunset Spa" />
+                    <InputControl disabled label='Stock in' placeholder="31" value={stockModalData.stockIn} />
+                    <InputControl disabled label='Minimun availability' placeholder="31" value={stockModalData.limitQuantityInStock} />
+                    <InputControl disabled label='Provider Links' placeholder="https://fb/phucle1310" />
+                    <InputControl disabled label='Usage Rate' placeholder="HIGH" value={stockModalData.usageRate} />
+                    <InputControl disabled label='Image' placeholder="Image for this Service" isImage value={stockModalData.avatar} />
+                    {/* <div className="grid-cols-2 grid gap-4 col-span-2">
                         <InputControl disabled label='Short Description' placeholder={ServicePlaceholder.short} value={servicesModal.name} />
                         <InputControl disabled label='Detailed Description' placeholder={ServicePlaceholder.detailed} value={servicesModal.name} />
-
-                    </div>
+                    </div> */}
                     <InputControl isSkipped />
                 </div>
                 <DialogFooter>

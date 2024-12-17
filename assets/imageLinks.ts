@@ -1,0 +1,2 @@
+export const img75Off_1 = 'https://www.shutterstock.com/image-vector/75-discount-banner-vector-template-on-1282211185'
+export const img75Off_2 = 'https://www.shutterstock.com/image-illustration/75-off-sale-discount-banner-offer-1892939506'

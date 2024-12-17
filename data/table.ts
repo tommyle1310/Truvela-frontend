@@ -92,7 +92,7 @@ export const stockTable: Stock[] = [
         price: 25.0,
         quantity: 50,
         description: "A gentle facial cleanser suitable for all skin types.",
-        imageUrl: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/man-on-a-street.jpg",
+        avatar: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/man-on-a-street.jpg",
         stockLocation: {
             id: "loc-001",
             name: "Floor 1 Cabinet A",
@@ -111,7 +111,7 @@ export const stockTable: Stock[] = [
         price: 15.0,
         quantity: 100,
         description: "A soothing lavender-infused massage oil for relaxation.",
-        imageUrl: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/man-on-a-street.jpg",
+        avatar: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/man-on-a-street.jpg",
         stockLocation: {
             id: "loc-002",
             name: "Floor 2 Storage Room",
@@ -130,7 +130,7 @@ export const stockTable: Stock[] = [
         price: 12.5,
         quantity: 75,
         description: "Sulfate-free shampoo that hydrates and nourishes hair.",
-        imageUrl: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/man-on-a-street.jpg",
+        avatar: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/man-on-a-street.jpg",
         stockLocation: {
             id: "loc-003",
             name: "Floor 1 Cabinet B",

@@ -38,5 +38,11 @@ export const servicesModal: IServiceModalProps = {
     ageLimit: 16,
     minLevel: "Senior",
     productUsed: ["stock001", "stock002"], // IDs from Stock
-    addOns: ["addon001"], // IDs from AddOns
+    addOns: ["ADDON_1"], // IDs from AddOns
+}
+
+
+export const ServicePlaceholder = {
+    short: 'Leaf is a soothing head, shoulder, and neck massage designed to relieve tension, reduce stress, and promote relaxation. Perfect for those seeking relief from everyday muscle tightness and discomfort.',
+    detailed: 'Leaf is a therapeutic head, shoulder, and neck massage technique designed to alleviate the tension that often builds up in these areas due to stress, poor posture, or long hours at a desk. This type of massage targets the upper body muscles, using gentle yet effective pressure to release knots, improve circulation, and relax the surrounding tissues. Regular sessions can help reduce the frequency and intensity of headaches, improve mobility, and relieve muscle stiffness. The process involves a combination of kneading, circular motions, and gentle stretches to ease tightness and promote overall relaxation. Ideal for individuals who experience frequent neck and shoulder discomfort, Leaf massage is also beneficial for those dealing with stress-related issues, providing both physical and mental relief. With its calming effect, this technique helps to reset the body and mind, making it an excellent option for improving well-being and comfort.'
 }
