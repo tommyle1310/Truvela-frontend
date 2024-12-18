@@ -35,11 +35,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased `}
+        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased bg-gradient-to-b from-lavender-primary-100 to-lavender-success-100`}
       >
         <div className=" flex mx-auto max-w-screen-lg border min-h-screen">
           <Sidebar />
-          <div className="flex-1">
+          <div className="flex-1 bg-white">
             {children}
           </div>
         </div>

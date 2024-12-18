@@ -27,7 +27,7 @@ export const treatmentProducts: TreatmentProduct[] = [
 // Sample Add-Ons
 export const addOns: AddOns[] = [
     {
-        id: "addon001",
+        id: "ADDON_1",
         name: "Hot Stones",
         price: 10,
         img: {
@@ -37,7 +37,7 @@ export const addOns: AddOns[] = [
         description: "Enhance your massage with heated basalt stones.",
     },
     {
-        id: "addon002",
+        id: "ADDON_2",
         name: "Aromatherapy Scents",
         price: 5,
         img: {
@@ -73,7 +73,7 @@ export const stockLocations: StockLocation[] = [
 // Sample Stock Items
 export const stockItems: Stock[] = [
     {
-        id: "stock001",
+        id: "PRO_1",
         name: "Coconut Massage Oil",
         category: StockCategory.MASSAGE_OILS_AND_LOTIONS,
         price: 30,
@@ -85,7 +85,7 @@ export const stockItems: Stock[] = [
         expireAfter: 30,
     },
     {
-        id: "stock002",
+        id: "PRO_2",
         name: "Collagen Face Mask",
         category: StockCategory.FACIAL_TREATMENTS,
         price: 50,
@@ -97,7 +97,7 @@ export const stockItems: Stock[] = [
         expireAfter: 15,
     },
     {
-        id: "stock003",
+        id: "PRO_3",
         name: "Peppermint Essential Oil",
         category: StockCategory.AROMATHERAPY,
         price: 20,

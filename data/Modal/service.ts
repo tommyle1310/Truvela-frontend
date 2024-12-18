@@ -37,7 +37,7 @@ export const servicesModal: IServiceModalProps = {
     restrictions: "Not suitable for individuals allergic to essential oils.",
     ageLimit: 16,
     minLevel: "Senior",
-    productUsed: ["stock001", "stock002"], // IDs from Stock
+    productUsed: ["PRO_1", "PRO_2"], // IDs from Stock
     addOns: ["ADDON_1"], // IDs from AddOns
 }
 
