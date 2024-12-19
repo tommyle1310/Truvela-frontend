@@ -2,12 +2,13 @@ import { RoleItem } from "@/types/governance";
 import { permissions, roleItems } from "../governance";
 import { TherapistLevel } from "@/types/therapist";
 import { Service } from "@/types/service";
+import { StaffRole } from "../staff";
 
 export interface IStaffModalProps {
     id: string
     name: string
     email: string
-    role: RoleItem
+    role: StaffRole
     isFullTime: boolean
     gender: 'male' | 'female' | 'others'
     avatar?: {
@@ -31,10 +32,6 @@ export const StaffModal: IStaffModalProps = {
     role: {
         id: "role_admin",
         name: "Admin",
-        avatar: {
-            url: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/man-on-a-street.jpg",
-            key: "admin_avatar"
-        },
         description: "Full access to all resources and actions",
         permissions: [...permissions], // Admin gets all permissions
     },
@@ -67,14 +64,17 @@ export const StaffModal: IStaffModalProps = {
             }],
             ageLimit: 18,
             category: [{
-                id: 'category_1',
+                id: 'SC_1',
                 name: 'Massage Therapy',
                 description: 'Various types of massages focused on relaxation, pain relief, and overall well-being.',
                 avatar: {
                     url: 'https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/massage.jpg',
                     key: 'massage_therapy_avatar',
-                }
+                },
+                createdAt: 1672873100000,
+                updatedAt: 1672873100000
             }],
+
         }
     ]
 }

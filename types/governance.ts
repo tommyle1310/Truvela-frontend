@@ -7,10 +7,6 @@ export type Permission = {
 export type RoleItem = {
     id: string; // Unique identifier for the role
     name: string; // Name of the role (e.g., "Admin", "Manager")
-    avatar: {
-        url: string; // URL for the avatar image
-        key: string; // Key for identifying the avatar in storage
-    };
     description: string; // Brief description of the role
-    permissions: Permission[]; // List of permissions associated with this role
+    permissions?: Permission[]; // List of permissions associated with this role
 };

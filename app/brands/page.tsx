@@ -24,7 +24,7 @@ const page = () => {
         <div className="p-4 flex flex-col gap-4">
 
             <h1 className='text-xl font-bold text-lavender-primary-700'>My Brands</h1>
-            <div className="flex justify-between items-center bg-blue-100">
+            <div className="flex justify-between items-center">
                 <SearchBar />
                 <SpaForm />
             </div>

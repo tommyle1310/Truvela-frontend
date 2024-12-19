@@ -12,20 +12,12 @@ export const roleItems: RoleItem[] = [
     {
         id: "role_admin",
         name: "Admin",
-        avatar: {
-            url: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/man-on-a-street.jpg",
-            key: "admin_avatar"
-        },
         description: "Full access to all resources and actions",
         permissions: [...permissions], // Admin gets all permissions
     },
     {
         id: "role_manager",
         name: "Manager",
-        avatar: {
-            url: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/man-on-a-street.jpg",
-            key: "manager_avatar"
-        },
         description: "Manages daily operations and reports",
         permissions: permissions.filter((perm) =>
             ["view_reports", "manage_inventory", "manage_services"].includes(perm.name)
@@ -34,10 +26,6 @@ export const roleItems: RoleItem[] = [
     {
         id: "role_staff",
         name: "Staff",
-        avatar: {
-            url: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/man-on-a-street.jpg",
-            key: "staff_avatar"
-        },
         description: "Limited access for daily tasks and customer service",
         permissions: permissions.filter((perm) => ["view_reports"].includes(perm.name)),
     },

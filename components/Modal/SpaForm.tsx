@@ -80,40 +80,42 @@ export function SpaForm() {
 
 
     return (
-        <Dialog >
-            <DialogTrigger asChild>
-                <Button className="">Add</Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-screen-md  z-[100] overflow-visible">
-                <DialogHeader>
-                    <DialogTitle>Add Brand</DialogTitle>
-                </DialogHeader>
-                <div className="grid grid-cols-3 gap-4 py-4 ">
-                    <InputControl label='BRAND ID' placeholder="PRO_1" value={stockModalData.id} />
-                    <InputControl label='Brand Name' placeholder="Sunset Spa" value={stockModalData.name} />
-                    <InputControl label='Address' placeholder="83 Le Van Bua" value={stockModalData.name} />
-                    <InputControl label='Spa Type' placeholder="Medical Spa" value={stockModalData.name} />
-                    <InputControl label='Spa Manager' placeholder="Nguyen Van Chris" value={stockModalData.name} />
-                    <InputControl label='Max Capacity' placeholder="30 people" value={stockModalData.name} />
-                    <InputControl label='Operating Hours' placeholder="Monday: 10 AM - 10 PM" isMultiSelectList multiSelectValue={buildMultiSelectValue("servicesOffer")} />
-                    <InputControl label='Tags' placeholder="Top Performer" isMultiSelectList multiSelectValue={spaTags.map(item => ({ id: item.id, mainTitle: item.name }))} />
-                    <InputControl label='Services Offer' placeholder="Facial" isMultiSelectList multiSelectValue={buildMultiSelectValue("servicesOffer")} />
-                    <InputControl label='Image' placeholder="Image for this Service" isImage value={stockModalData.avatar} />
-                    <div className="col-span-2 grid grid-cols-3 gap-4">
-                        <InputControl label='Image Gallery' isImageGallery imageGallery={['https://github.com/shadcn.png', 'https://github.com/shadcn.png', 'https://github.com/shadcn.png']} value={stockModalData.detailedDescription} />
+        <div className="">
+            <Dialog >
+                <DialogTrigger asChild>
+                    <Button className="">Add</Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-screen-md  z-[100] overflow-visible">
+                    <DialogHeader>
+                        <DialogTitle>Add Brand</DialogTitle>
+                    </DialogHeader>
+                    <div className="grid grid-cols-3 gap-4 py-4 ">
+                        <InputControl disabled label='BRAND ID' placeholder="PRO_1" value={stockModalData.id} />
+                        <InputControl label='Brand Name' placeholder="Sunset Spa" value={stockModalData.name} />
+                        <InputControl label='Address' placeholder="83 Le Van Bua" value={stockModalData.name} />
+                        <InputControl label='Spa Type' placeholder="Medical Spa" value={stockModalData.name} />
+                        <InputControl label='Spa Manager' placeholder="Nguyen Van Chris" value={stockModalData.name} />
+                        <InputControl label='Max Capacity' placeholder="30 people" value={stockModalData.name} />
+                        <InputControl label='Operating Hours' placeholder="Monday: 10 AM - 10 PM" multiSelectValue={buildMultiSelectValue("servicesOffer")} />
+                        <InputControl label='Tags' placeholder="Top Performer" multiSelectValue={spaTags.map(item => ({ id: item.id, mainTitle: item.name }))} />
+                        <InputControl label='Services Offer' placeholder="Facial" multiSelectValue={buildMultiSelectValue("servicesOffer")} />
+                        <InputControl label='Image' placeholder="Image for this Service" isImage value={stockModalData.avatar} />
+                        <div className="col-span-2 grid grid-cols-3 gap-4">
+                            <InputControl label='Image Gallery' isImageGallery imageGallery={['https://github.com/shadcn.png', 'https://github.com/shadcn.png', 'https://github.com/shadcn.png']} value={stockModalData.detailedDescription} />
 
-                        <div className="col-span-2 grid grid-cols-1">
-                            <InputControl isHidden label='Exact Location' placeholder="" value={stockModalData.shortDescription} />
-                            <InputControl label='Description' placeholder="Lavender Oil" value={stockModalData.detailedDescription} />
-                            <InputControl isSkipped />
+                            <div className="col-span-2 grid grid-cols-1">
+                                <InputControl isHidden label='Exact Location' placeholder="" value={stockModalData.shortDescription} />
+                                <InputControl label='Description' placeholder="Lavender Oil" value={stockModalData.detailedDescription} />
+                                <InputControl isSkipped />
+                            </div>
+
                         </div>
-
                     </div>
-                </div>
-                <DialogFooter>
-                    <Button type="submit">Save changes</Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
+                    <DialogFooter>
+                        <Button type="submit">Save changes</Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        </div>
     )
 }

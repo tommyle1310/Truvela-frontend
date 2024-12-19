@@ -79,43 +79,44 @@ export function StockForm() {
 
 
     return (
-        <Dialog >
-            <DialogTrigger asChild>
-                <Button className="">Add</Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-screen-md  z-[100] overflow-visible">
-                <DialogHeader>
-                    <DialogTitle>Add Product</DialogTitle>
-                </DialogHeader>
-                <div className="grid grid-cols-3 gap-4 py-4 ">
-                    <InputControl disabled label='Product ID' placeholder="PRO_1" value={stockModalData.id} />
-                    <InputControl disabled label='Product Name' placeholder="Lavender Oil" value={stockModalData.name} />
-                    <InputControl disabled label='Category' placeholder="Skincare" isMultiSelectList multiSelectValue={buildMultiSelectValue("category")} />
-                    <div className="flex items-center gap-4 col-span-3 ">
-                        <InputControl disabled label='Stock in' placeholder="31" value={stockModalData.stockIn} />
-                        <InputControl disabled label='Cost Price' placeholder="30" value={stockModalData.costPrice} />
-                        <InputControl disabled label='Selling Price' placeholder="31" value={stockModalData.sellingPrice} />
-                        <InputControl disabled label='Count Unit' placeholder="Kilogram" value={stockModalData.countUnit} />
-                        <InputControl disabled label='Minimun availability' placeholder="31" value={stockModalData.limitQuantityInStock} />
-                    </div>
-                    <InputControl disabled label='Expire after' placeholder="30 days" value={stockModalData.expireAfter} />
-                    <InputControl disabled label='Usage Rate' placeholder="HIGH" value={stockModalData.usageRate} isDropdown dropdownValue={buildDropdownValue('usageRate')} />
-                    <InputControl disabled label='Available Spa' placeholder="Sunset Spa" isMultiSelectList multiSelectValue={buildMultiSelectValue('spaAvailable')} />
-                    {/* <InputControl isSkipped /> */}
-                    <InputControl disabled label='Image' placeholder="Image for this Service" isImage value={stockModalData.avatar} />
-                    <div className="col-span-2 grid grid-cols-2 gap-4">
-                        <div className="col-span-2">
-                            <InputControl disabled label='Provider Links' placeholder="https://fb/phucle1310" isMultiSelectList multiSelectValue={buildMultiSelectValue('providerLinks')} />
+        <div className="">
+            <Dialog >
+                <DialogTrigger asChild>
+                    <Button className="">Add</Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-screen-md  z-[100] overflow-visible">
+                    <DialogHeader>
+                        <DialogTitle>Add Product</DialogTitle>
+                    </DialogHeader>
+                    <div className="grid grid-cols-3 gap-4 py-4 ">
+                        <InputControl disabled label='Product ID' placeholder="PRO_1" value={stockModalData.id} />
+                        <InputControl disabled label='Product Name' placeholder="Lavender Oil" value={stockModalData.name} />
+                        <InputControl disabled label='Category' placeholder="Skincare" multiSelectValue={buildMultiSelectValue("category")} />
+                        <div className="flex items-center gap-4 col-span-3 ">
+                            <InputControl disabled label='Stock in' placeholder="31" value={stockModalData.stockIn} />
+                            <InputControl disabled label='Cost Price' placeholder="30" value={stockModalData.costPrice} />
+                            <InputControl disabled label='Selling Price' placeholder="31" value={stockModalData.sellingPrice} />
+                            <InputControl disabled label='Count Unit' placeholder="Kilogram" value={stockModalData.countUnit} />
+                            <InputControl disabled label='Minimun availability' placeholder="31" value={stockModalData.limitQuantityInStock} />
                         </div>
-                        <InputControl disabled label='Short description' placeholder="Lavender Oil" value={stockModalData.shortDescription} />
-                        <InputControl disabled label='Detailed description' placeholder="Lavender Oil" value={stockModalData.detailedDescription} />
+                        <InputControl disabled label='Expire after' placeholder="30 days" value={stockModalData.expireAfter} />
+                        <InputControl disabled label='Usage Rate' placeholder="HIGH" value={stockModalData.usageRate} dropdownValue={buildDropdownValue('usageRate')} />
+                        <InputControl disabled label='Available Spa' placeholder="Sunset Spa" multiSelectValue={buildMultiSelectValue('spaAvailable')} />
+                        <InputControl disabled label='Image' placeholder="Image for this Service" isImage value={stockModalData.avatar} />
+                        <div className="col-span-2 grid grid-cols-2 gap-4">
+                            <div className="col-span-2">
+                                <InputControl disabled label='Provider Links' placeholder="https://fb/phucle1310" multiSelectValue={buildMultiSelectValue('providerLinks')} />
+                            </div>
+                            <InputControl disabled label='Short description' placeholder="Lavender Oil" value={stockModalData.shortDescription} />
+                            <InputControl disabled label='Detailed description' placeholder="Lavender Oil" value={stockModalData.detailedDescription} />
 
+                        </div>
                     </div>
-                </div>
-                <DialogFooter>
-                    <Button type="submit">Save changes</Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
+                    <DialogFooter>
+                        <Button type="submit">Save changes</Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        </div>
     )
 }
