@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { Stock } from "@/types/stock";
 import { StockForm } from "@/components/Modal/StockForm";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 const columns: ColumnDef<Stock>[] = [
     {

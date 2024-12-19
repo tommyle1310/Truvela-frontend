@@ -42,9 +42,6 @@ import InputControl from "./InputControl"
 
 
 
-
-
-
 export function StockForm() {
     const buildDropdownValue = (type: | 'usageRate') => {
         switch (type) {
@@ -82,19 +79,19 @@ export function StockForm() {
 
 
     return (
-        <Dialog>
+        <Dialog >
             <DialogTrigger asChild>
-                <Button >Add</Button>
+                <Button className="">Add</Button>
             </DialogTrigger>
-            <DialogContent className="max-w-screen-md">
+            <DialogContent className="max-w-screen-md  z-[100] overflow-visible">
                 <DialogHeader>
                     <DialogTitle>Add Product</DialogTitle>
                 </DialogHeader>
-                <div className="grid grid-cols-3 gap-4 py-4">
+                <div className="grid grid-cols-3 gap-4 py-4 ">
                     <InputControl disabled label='Product ID' placeholder="PRO_1" value={stockModalData.id} />
                     <InputControl disabled label='Product Name' placeholder="Lavender Oil" value={stockModalData.name} />
                     <InputControl disabled label='Category' placeholder="Skincare" isMultiSelectList multiSelectValue={buildMultiSelectValue("category")} />
-                    <div className="flex items-center gap-4 col-span-3">
+                    <div className="flex items-center gap-4 col-span-3 ">
                         <InputControl disabled label='Stock in' placeholder="31" value={stockModalData.stockIn} />
                         <InputControl disabled label='Cost Price' placeholder="30" value={stockModalData.costPrice} />
                         <InputControl disabled label='Selling Price' placeholder="31" value={stockModalData.sellingPrice} />

@@ -46,26 +46,38 @@ const InputControl = ({ placeholder, disabled, isImage, label, isHidden, isSkipp
     }, [multiSelectValue])
 
     return (
-        <div className="flex flex-col gap-2 overflow-visible ">
+        <div className="flex flex-col gap-2">
             <Label htmlFor="name">{label}</Label>
             {!isDropdown ? (
                 isMultiSelectList ?
                     <Popover >
                         <PopoverTrigger className='' asChild>
-                            <Button variant="outline">List {label}</Button>
+                            <Button
+                                variant="outline"
+                            >
+                                List {label}
+                            </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-full overflow-visible">
-                            <ScrollArea className="h-[200px] pointer-events: auto;">
-                                <div className="flex flex-col gap-1 ">
+                        <PopoverContent className="w-full  ">
+                            <ScrollArea className="h-[200px]">
+                                <div className="flex flex-col gap-1">
                                     {multiSelectData?.map((item) => (
-                                        <div key={item.id} className=" py-1 px-2 rounded-sm hv hover:bg-slate-200 text-slate-600 flex items-center justify-between gap-3">
+                                        <div
+                                            key={item.id}
+                                            className="py-1 px-2 rounded-sm hover:bg-slate-200 text-slate-600 flex items-center justify-between gap-3"
+                                            onMouseOver={() => {
+                                                console.log(`Hovered over item: ${item.mainTitle}`); // Log when an item is hovered
+                                            }}
+                                            onMouseEnter={() => {
+                                                console.log(`Hovered over item (onMouseEnter): ${item.mainTitle}`); // Double check the logs on enter
+                                            }}
+                                        >
                                             <Label htmlFor={item.id} className="flex-grow flex gap-4 justify-between items-center">
                                                 <h5>{item.mainTitle}</h5>
                                                 <strong className="font-thin text-sm">{item.subTitle}</strong>
                                             </Label>
                                             <Checkbox id={item.id} />
                                         </div>
-
                                     ))}
                                 </div>
                             </ScrollArea>
