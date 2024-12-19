@@ -6,7 +6,9 @@ export type ServiceCategory =
         id: string,
         name: string,
         description: string,
-        avatar: { url: string, key: string }
+        avatar: { url: string, key: string },
+        createdAt: number,
+        updatedAt: number
     }
 
 

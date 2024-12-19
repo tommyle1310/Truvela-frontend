@@ -12,13 +12,13 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-const RequirePermission = () => {
+const RequirePermission = ({ label }: { label?: string }) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline" className="text-left text-lavender-primary-600">View Salary</Button>
+                <Button variant="outline" className="text-left text-lavender-primary-600">View {label}</Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="sm:max-w-[425px] z-[100]">
                 <DialogHeader>
                     <DialogTitle>Edit profile</DialogTitle>
                     <DialogDescription>

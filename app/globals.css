@@ -97,3 +97,6 @@ body {
   .hv {
 @apply hover:duration-300 cursor-pointer
   }
+  .center {
+@apply flex items-center justify-center
+  }
