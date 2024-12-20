@@ -40,7 +40,7 @@ interface TableProps<TData> {
     filterPlaceholder?: string;
 }
 
-export function GenericTable<TData>({ data, columns, filterPlaceholder = "Filter..." }: TableProps<TData>) {
+export function GenericTable<TData>({ data, columns, filterPlaceholder = "Search..." }: TableProps<TData>) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -65,17 +65,24 @@ export function GenericTable<TData>({ data, columns, filterPlaceholder = "Filter
         },
     });
 
+    console.log(table.getColumn('email')?.getFilterValue())
+
     return (
         <div className="w-full">
             <div className="flex items-center py-4">
                 <Input
                     placeholder={filterPlaceholder}
-                    value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("name")?.setFilterValue(event.target.value)
+                    value={
+                        (table.getColumn("name")?.getFilterValue() as string | undefined)
                     }
+                    onChange={(event) => {
+                        const value = event.target.value;
+                        table.getColumn("name")?.setFilterValue(value);
+                    }}
                     className="max-w-sm"
                 />
+
+
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">

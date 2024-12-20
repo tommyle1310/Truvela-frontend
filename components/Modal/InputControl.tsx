@@ -20,6 +20,7 @@ interface IInputControl {
     isHidden?: boolean,
     label?: string,
     value?: number | string,
+    popOverExtraBtn?: { label: string, onClick: () => void }
     defaultValue?: string | number
     isSkipped?: boolean,
     isImageGallery?: boolean,
@@ -38,6 +39,7 @@ const InputControl = ({
     label,
     isHidden,
     isSkipped,
+    popOverExtraBtn,
     value,
     defaultValue,
     dropdownValue,
@@ -109,6 +111,9 @@ const InputControl = ({
                 </PopoverTrigger>
                 <PopoverContent className="min-w-48">
                     <ScrollArea className="h-[200px]">
+                        {popOverExtraBtn &&
+                            <Button variant={'link'} onClick={popOverExtraBtn.onClick} className='self-end text-lavender-primary-500 pl-2'>{popOverExtraBtn.label}</Button>
+                        }
                         <div className="flex flex-col gap-1">
                             {multiSelectData?.map((item) => (
                                 <div

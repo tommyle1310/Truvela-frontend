@@ -16,9 +16,6 @@ export function areTimestampsOnSameDate(timestamp1: number, timestamp2: number) 
     const month2 = date2.getUTCMonth(); // 0-based
     const day2 = date2.getUTCDate();
 
-    console.log(date1); // Log for debugging
-    console.log(date2); // Log for debugging
-
     // Compare the extracted values
     return year1 === year2 && month1 === month2 && day1 === day2;
 }

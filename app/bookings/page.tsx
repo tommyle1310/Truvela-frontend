@@ -2,11 +2,29 @@
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { START_HOUR, TOTAL_SLOTS } from '@/lib/constants';
-import { dataBookings, TimelineProps } from '@/data/bookings';
+import { bookingDataRooms, dataBookings, TimelineProps } from '@/data/bookings';
 import { StaffForm } from '@/components/Modal/StaffForm';
 import { HoverCardBooking } from '@/components/HoverCard/booking';
 import { DatePicker } from '@/components/DatePicker';
 import { areTimestampsOnSameDate } from '@/functions/formatTime';
+import {
+    Tabs,
+    TabsContent,
+    TabsList,
+    TabsTrigger,
+} from "@/components/ui/tabs"
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+import { Button } from '@/components/ui/button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 
 
@@ -14,7 +32,6 @@ import { areTimestampsOnSameDate } from '@/functions/formatTime';
 const Timeline: React.FC<TimelineProps> = ({ data }) => {
     const hours = Array.from({ length: TOTAL_SLOTS + 1 }, (_, i) => i); // [0, 1, ..., 12]
     const [currentTimeLeft, setCurrentTimeLeft] = useState(0);
-    const [selectedDate, setSelectedDate] = useState<number>(Math.floor(new Date().getTime() / 1000));
 
 
     useEffect(() => {
@@ -87,17 +104,25 @@ const Timeline: React.FC<TimelineProps> = ({ data }) => {
                         })}
                     </div>
                 </div>
-            )) : <div className='ml-24 bg-[#ead7ce] flex flex-col items-center p-6'>
-                <div
-                    className="w-2/5 aspect-square mt-10 mb-8"
-                    style={{
-                        backgroundImage: `url('https://res.cloudinary.com/dlavqnrlx/image/upload/v1733450667/qqwqpgzhtmymkjmvv0vy.jpg')`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center'
-                    }}
-                ></div>
-                <h3 className=' text-xl font-bold text-lavender-info-600'>No Bookings on this day.</h3>
-            </div>}
+            )) : (<div className='flex items-center'>
+                <div className="w-24 font-bold flex flex-col bg-white">
+                    {bookingDataRooms.map(item => (
+                        <div key={item.id} className='h-14 text-end mr-4'>{item.name}</div>
+                    ))}
+                </div>
+                <div className=' bg-[#ead7ce]  flex-grow flex flex-col items-center p-6'>
+                    <div
+                        className="w-full aspect-video mt-10 mb-8"
+                        style={{
+                            backgroundImage: `url('https://res.cloudinary.com/dlavqnrlx/image/upload/v1733450667/qqwqpgzhtmymkjmvv0vy.jpg')`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center'
+                        }}
+                    ></div>
+                    <h3 className=' text-xl font-bold text-lavender-info-600'>No Bookings on this day.</h3>
+                </div>
+            </div>)
+            }
 
         </div>
     );
@@ -114,10 +139,51 @@ const Bookings: NextPage = () => {
                 <h3 className="text-lavender-primary-600 text-xl font-bold">Bookings</h3>
                 <DatePicker selectedDate={selectedDate} setPropSelectedDate={setSelectedDate} />
             </div>
-            <Timeline data={dataBookings && dataBookings.find(item => {
-                // console.log('cehck ảe', areTimestampsOnSameDate(selectedDate, item.timestamp))
-                return areTimestampsOnSameDate(selectedDate, item.timestamp)
-            })?.rooms} />
+            <Tabs defaultValue="Scheduled" className="w-full">
+                <TabsList className=" w-full bg-lavender-primary-200">
+                    <TabsTrigger className='w-full' value="Scheduled">Scheduled Appointments</TabsTrigger>
+                    <TabsTrigger className='w-full relative flex items-center gap-2' value="Pending">
+                        Pending Appointment
+                        <div className=" w-6 h-6 center bg-lavender-danger-200 rounded-full text-lavender-danger-700 font-semibold border border-lavender-danger-800 text-sm" >
+                            {3}
+                        </div>
+                    </TabsTrigger>
+                </TabsList>
+                <TabsContent value="Scheduled">
+                    <Timeline data={dataBookings && dataBookings.find(item => {
+                        return areTimestampsOnSameDate(selectedDate, item.timestamp)
+                    })?.rooms} />
+                </TabsContent>
+                <TabsContent className='w-full' value="Pending">
+                    <div className="w-full grid grid-cols-2 gap-4">
+                        <Card className={` border-2`}>
+                            <CardHeader className="p-2 border-b border-lavender-warning-600 items-center flex flex-row gap-2">
+                                <Avatar>
+                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                                <div className="p-2 flex-grow">
+                                    <CardTitle className='flex justify-between'>
+                                        <span>John Doe</span>
+                                        <span className='text-lavender-danger-600 '>30-12-2024</span>
+                                    </CardTitle>
+                                    <CardDescription className='text-sm'>
+                                        Therapist: <span className='text-lavender-success-600 font-bold'>No.122</span>
+                                    </CardDescription>
+                                </div>
+                            </CardHeader>
+                            <CardContent className="space-y-2 p-2 text-sm">
+                                <p>Time of arrival: <span className="text-lavender-info-600 font-bold">10 AM - 11 AM</span>  | <span className='text-lavender-danger-600 font-bold'>30-12-2024</span></p>
+                                <p>Service: <span className="text-lavender-primary-600 text-md font-bold">Doggy</span></p>
+                            </CardContent>
+                            <CardFooter className="p-2 flex justify-end">
+                                <Button>Confirm</Button>
+                            </CardFooter>
+                        </Card>
+                    </div>
+                </TabsContent>
+            </Tabs>
+
         </div>
     );
 }

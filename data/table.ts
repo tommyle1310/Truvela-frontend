@@ -78,7 +78,14 @@ export const serviceTable: Service[] = [
             img: { url: "https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/man-on-a-street.jpg", key: '21' }
         }],
         ageLimit: 18,
-        category: [{ id: '1', name: 'Relax', avatar: { url: 'https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/man-on-a-street.jpg', key: 'key_avt' }, description: 'Relaxing massage helps you feel relax and refresh' }],
+        category: [{
+            id: '1',
+            name: 'Relax',
+            avatar: { url: 'https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802009/samples/man-on-a-street.jpg', key: 'key_avt' },
+            description: 'Relaxing massage helps you feel relax and refresh',
+            createdAt: 1672873100000, // Timestamp for creation date
+            updatedAt: 1672873100000,
+        }],
     },
 
 ];

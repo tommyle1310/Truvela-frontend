@@ -11,8 +11,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
     Tabs,
     TabsContent,
@@ -24,6 +22,7 @@ import { ReportItem } from "@/types/report"
 import { faCopy } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { format } from "date-fns"
+import { useState } from "react"
 
 export const TabContentRender = ({ value, data }: { value: string, data: ReportItem[] }) => {
     return (
@@ -31,7 +30,7 @@ export const TabContentRender = ({ value, data }: { value: string, data: ReportI
             {data.map(data => {
                 if (data.senderRole === value)
                     return (
-                        <Card className={`text-sm ${data.priority === 'High' ? 'border-lavender-danger-300' : (data.priority === 'Low' ? 'border-lavender-success-300' : 'border-lavender-info-300')} border-2`}>
+                        <Card className={`text-sm ${data.priority === 'High' ? 'border-lavender-danger-300 bg-lavender-danger-100' : (data.priority === 'Low' ? 'border-lavender-success-300 bg-lavender-success-100' : 'border-lavender-info-300 bg-lavender-info-100')} border-2`}>
                             <CardHeader className="p-2">
                                 <div className="flex items-center justify-between">
                                     <CardTitle>{data.senderName}</CardTitle>
@@ -59,13 +58,14 @@ export const TabContentRender = ({ value, data }: { value: string, data: ReportI
 }
 
 const Page = () => {
+    const [selectedDate, setSelectedDate] = useState<number>(Math.floor(new Date().getTime() / 1000));
     return (
         <div className="p-4 flex flex-col gap-4 w-full">
             <div className="flex items-center gap-3 justify-between">
                 <h3 className="text-lavender-primary-600 text-xl font-bold">Report Lists</h3>
-                <DatePicker />
             </div>
-            <div className="self-end">
+            <div className="self-end flex items-center gap-4">
+                <DatePicker selectedDate={selectedDate} setPropSelectedDate={setSelectedDate} />
                 <Select />
             </div>
             <Tabs defaultValue="Client" className="w-full">

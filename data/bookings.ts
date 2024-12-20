@@ -147,3 +147,38 @@ export const dataBookings: Array<{ timestamp: number; rooms: Room[] }> = [
         ],
     },
 ];
+
+export const bookingDataRooms = [
+    {
+        id: 'ROOM_1',
+        name: 'BED 1',
+    },
+    {
+        id: 'ROOM_2',
+        name: 'BED 2',
+    },
+    {
+        id: 'ROOM_3',
+        name: 'BED 3',
+    },
+    {
+        id: 'ROOM_4',
+        name: 'BED 4',
+    },
+    {
+        id: 'ROOM_5',
+        name: 'BED 5',
+    },
+    {
+        id: 'ROOM_6',
+        name: 'BED 6',
+    },
+    {
+        id: 'ROOM_7',
+        name: 'SEAT 1',
+    },
+    {
+        id: 'ROOM_8',
+        name: 'SEAT 2',
+    },
+]

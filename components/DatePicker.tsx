@@ -12,14 +12,7 @@ import {
 } from "@/components/ui/popover"
 
 export function DatePicker({ setPropSelectedDate, selectedDate }: { selectedDate: number, setPropSelectedDate: Dispatch<SetStateAction<number>> }) {
-    // UseEffect can be uncommented if you need to sync selectedDate from prop to state
-    // useEffect(() => {
-    //     if (selectedDate) {
-    //         setPropSelectedDate(selectedDate)
-    //     }
-    // }, [selectedDate])
 
-    // Check for valid selectedDate
     const formattedDate = selectedDate ? format(new Date(selectedDate * 1000), "PPP") : "Pick a date";
 
     // Convert the Date to timestamp and set it
